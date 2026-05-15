@@ -1,0 +1,10 @@
+INFO:     127.0.0.1:65213 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65212 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60582 - "OPTIONS /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61563 - "OPTIONS /api/refresh/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52832 - "OPTIONS /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50293 - "OPTIONS /api/refresh/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50293 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52832 - "GET /api/refresh/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61563 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50293 - "GET /api/refresh/status HTTP/1.1" 200 OK

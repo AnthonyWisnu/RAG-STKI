@@ -1,0 +1,45 @@
+ERROR 2026-05-14 21:59:01,492 [_common.py:_download_and_save:623]
+Error while scraping https://fbref.com/en/comps/Big5/misc/players/Big-5-European-Leagues-Stats. Retrying in 0 seconds... (attempt 1 of 5).
+Traceback (most recent call last):
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\_common.py", line 607, in _download_and_save
+    response = self._validate_page(url).encode("utf-8")
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py", line 1031, in _validate_page
+    raise Exception(
+Exception: Could not retrieve page content within timeout. Possible reasons: failed CAPTCHA, IP block or network issues.
+ERROR 2026-05-14 21:59:47,930 [_common.py:_download_and_save:623]
+Error while scraping https://fbref.com/en/comps/Big5/misc/players/Big-5-European-Leagues-Stats. Retrying in 10 seconds... (attempt 2 of 5).
+Traceback (most recent call last):
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\_common.py", line 607, in _download_and_save
+    response = self._validate_page(url).encode("utf-8")
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py", line 1031, in _validate_page
+    raise Exception(
+Exception: Could not retrieve page content within timeout. Possible reasons: failed CAPTCHA, IP block or network issues.
+ERROR 2026-05-14 22:04:30,568 [_common.py:_download_and_save:623]
+Error while scraping https://fbref.com/en/comps/Big5/keepers/players/Big-5-European-Leagues-Stats. Retrying in 0 seconds... (attempt 1 of 5).
+Traceback (most recent call last):
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\_common.py", line 607, in _download_and_save
+    response = self._validate_page(url).encode("utf-8")
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py", line 1031, in _validate_page
+    raise Exception(
+Exception: Could not retrieve page content within timeout. Possible reasons: failed CAPTCHA, IP block or network issues.
+ERROR 2026-05-14 22:05:14,758 [_common.py:_download_and_save:623]
+Error while scraping https://fbref.com/en/comps/Big5/keepers/players/Big-5-European-Leagues-Stats. Retrying in 10 seconds... (attempt 2 of 5).
+Traceback (most recent call last):
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\_common.py", line 607, in _download_and_save
+    response = self._validate_page(url).encode("utf-8")
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py", line 1031, in _validate_page
+    raise Exception(
+Exception: Could not retrieve page content within timeout. Possible reasons: failed CAPTCHA, IP block or network issues.
+ERROR 2026-05-14 22:06:03,270 [_common.py:_download_and_save:623]
+Error while scraping https://fbref.com/en/comps/Big5/keepers/players/Big-5-European-Leagues-Stats. Retrying in 20 seconds... (attempt 3 of 5).
+Traceback (most recent call last):
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\_common.py", line 607, in _download_and_save
+    response = self._validate_page(url).encode("utf-8")
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py", line 1031, in _validate_page
+    raise Exception(
+Exception: Could not retrieve page content within timeout. Possible reasons: failed CAPTCHA, IP block or network issues.

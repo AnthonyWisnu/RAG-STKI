@@ -1,0 +1,14 @@
+Player profile:
+Name: {name}
+Position: {position}
+Nationality: {nationality}
+Latest club in data: {current_club}
+Latest league in data: {current_league}
+Latest season in data: {current_season}
+Latest market value: {current_value}
+
+Public statistics:
+{stats_summary}
+
+Valuation trend:
+{valuation_summary}

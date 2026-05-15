@@ -1,0 +1,202 @@
+[
+  {
+    "id": "kg_id_top_scorer_epl",
+    "question": "top skor Premier League 2025-2026",
+    "expected_strategy": "kg_only",
+    "expected_language": "id",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["gol", "Premier League", "Knowledge Graph"],
+    "must_not_contain": ["Champions League tidak tersedia", "xG", "progressive"]
+  },
+  {
+    "id": "kg_en_top_scorer_epl",
+    "question": "top scorer Premier League 2025-2026",
+    "expected_strategy": "kg_only",
+    "expected_language": "en",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["goals", "Premier League", "Knowledge Graph"],
+    "must_not_contain": ["Champions League tidak tersedia", "xG", "progressive"]
+  },
+  {
+    "id": "kg_id_top_scorer_laliga",
+    "question": "top skor La Liga 2025-2026",
+    "expected_strategy": "kg_only",
+    "expected_language": "id",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["gol", "La Liga"],
+    "must_not_contain": ["Champions League", "xG"]
+  },
+  {
+    "id": "kg_en_top_scorer_bundesliga",
+    "question": "top scorer Bundesliga 2025-2026",
+    "expected_strategy": "kg_only",
+    "expected_language": "en",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["goals", "Bundesliga"],
+    "must_not_contain": ["Champions League", "xG"]
+  },
+  {
+    "id": "kg_id_market_value_ramsdale",
+    "question": "berapa nilai pasar Aaron Ramsdale",
+    "expected_strategy": "kg_only",
+    "expected_language": "id",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["Nilai pasar", "Aaron Ramsdale", "EUR"],
+    "must_not_contain": ["xG", "progressive"]
+  },
+  {
+    "id": "kg_en_market_value_ramsdale",
+    "question": "what is Aaron Ramsdale market value",
+    "expected_strategy": "kg_only",
+    "expected_language": "en",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["Aaron Ramsdale", "market value", "EUR"],
+    "must_not_contain": ["xG", "progressive"]
+  },
+  {
+    "id": "kg_id_market_value_pedri",
+    "question": "berapa nilai pasar Pedri",
+    "expected_strategy": "kg_only",
+    "expected_language": "id",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["Pedri", "EUR"],
+    "must_not_contain": ["xG", "progressive"]
+  },
+  {
+    "id": "kg_en_market_value_pedri",
+    "question": "what is Pedri market value",
+    "expected_strategy": "kg_only",
+    "expected_language": "en",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["Pedri", "EUR"],
+    "must_not_contain": ["xG", "progressive"]
+  },
+  {
+    "id": "vector_id_profile_ramsdale",
+    "question": "Profil Aaron Ramsdale",
+    "expected_strategy": "vector_only",
+    "expected_language": "id",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["Aaron Ramsdale", "Ringkasan", "dokumen"],
+    "must_not_contain": ["Champions League", "xG"]
+  },
+  {
+    "id": "vector_en_profile_ramsdale",
+    "question": "Profile Aaron Ramsdale",
+    "expected_strategy": "vector_only",
+    "expected_language": "en",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["Aaron Ramsdale", "document", "summary"],
+    "must_not_contain": ["Champions League", "xG"]
+  },
+  {
+    "id": "vector_id_summary_goalkeeper",
+    "question": "ringkasan profil kiper Aaron Ramsdale",
+    "expected_strategy": "vector_only",
+    "expected_language": "id",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["Aaron Ramsdale", "Ringkasan"],
+    "must_not_contain": ["xG", "progressive"]
+  },
+  {
+    "id": "vector_en_summary_goalkeeper",
+    "question": "describe Aaron Ramsdale profile",
+    "expected_strategy": "vector_only",
+    "expected_language": "en",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["Aaron Ramsdale", "document"],
+    "must_not_contain": ["xG", "progressive"]
+  },
+  {
+    "id": "hybrid_id_profile_value_ramsdale",
+    "question": "Jelaskan profil dan nilai pasar Aaron Ramsdale",
+    "expected_strategy": "hybrid",
+    "expected_language": "id",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["Aaron Ramsdale", "EUR", "Ringkasan"],
+    "must_not_contain": ["Champions League", "xG"]
+  },
+  {
+    "id": "hybrid_en_profile_value_ramsdale",
+    "question": "Describe Aaron Ramsdale profile and value",
+    "expected_strategy": "hybrid",
+    "expected_language": "en",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["Aaron Ramsdale", "EUR", "document"],
+    "must_not_contain": ["Champions League", "xG"]
+  },
+  {
+    "id": "hybrid_id_compare_ramsdale_cresswell",
+    "question": "Bandingkan Aaron Ramsdale dan Aaron Cresswell",
+    "expected_strategy": "hybrid",
+    "expected_language": "id",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["Aaron", "Ringkasan"],
+    "must_not_contain": ["xG", "progressive"]
+  },
+  {
+    "id": "hybrid_en_compare_ramsdale_cresswell",
+    "question": "Compare Aaron Ramsdale and Aaron Cresswell",
+    "expected_strategy": "hybrid",
+    "expected_language": "en",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["Aaron", "document"],
+    "must_not_contain": ["xG", "progressive"]
+  },
+  {
+    "id": "valuation_id_ramsdale",
+    "question": "estimasi nilai pasar Aaron Ramsdale",
+    "expected_strategy": "valuation_reasoning",
+    "expected_language": "id",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["range", "EUR", "Aaron Ramsdale"],
+    "must_not_contain": ["prediksi pasti", "xG", "progressive"]
+  },
+  {
+    "id": "valuation_en_ramsdale",
+    "question": "estimate market value range for Aaron Ramsdale",
+    "expected_strategy": "valuation_reasoning",
+    "expected_language": "en",
+    "expected_data_available": true,
+    "requires_citations": true,
+    "must_contain_any": ["range", "EUR", "Aaron Ramsdale"],
+    "must_not_contain": ["guaranteed", "xG", "progressive"]
+  },
+  {
+    "id": "fallback_id_ucl",
+    "question": "siapa top scorer Liga Champions 2025-2026",
+    "expected_strategy": "kg_only",
+    "expected_language": "id",
+    "expected_data_available": false,
+    "requires_citations": false,
+    "must_contain_any": ["Data Champions League tidak tersedia"],
+    "must_not_contain": ["Erling Haaland", "Real Madrid", "Barcelona"]
+  },
+  {
+    "id": "fallback_en_ucl",
+    "question": "top scorer Champions League 2025-2026",
+    "expected_strategy": "kg_only",
+    "expected_language": "en",
+    "expected_data_available": false,
+    "requires_citations": false,
+    "must_contain_any": ["Data Champions League tidak tersedia"],
+    "must_not_contain": ["Erling Haaland", "Real Madrid", "Barcelona"]
+  }
+]

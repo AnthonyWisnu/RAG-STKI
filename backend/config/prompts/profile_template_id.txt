@@ -1,0 +1,14 @@
+Profil pemain:
+Nama: {name}
+Posisi: {position}
+Kewarganegaraan: {nationality}
+Klub terbaru dalam data: {current_club}
+Liga terbaru dalam data: {current_league}
+Musim terbaru dalam data: {current_season}
+Nilai pasar terbaru: {current_value}
+
+Statistik publik:
+{stats_summary}
+
+Tren valuasi:
+{valuation_summary}

@@ -1,0 +1,25 @@
+INFO:     Started server process [24152]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:59727 - "GET /api/health HTTP/1.1" 200 OK
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event CollectionQueryEvent: capture() takes 1 positional argument but 3 were given
+INFO:     127.0.0.1:53242 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53241 - "POST /api/chat HTTP/1.1" 200 OK
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     127.0.0.1:53270 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62322 - "GET /api/health HTTP/1.1" 200 OK
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     127.0.0.1:62334 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62333 - "POST /api/chat HTTP/1.1" 200 OK
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     127.0.0.1:60200 - "POST /api/chat HTTP/1.1" 200 OK

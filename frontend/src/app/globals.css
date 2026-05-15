@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg-primary: #0a0e13;
+  --color-bg-secondary: #111720;
+  --color-bg-tertiary: #1a2235;
+  --color-border: #1e2d45;
+  --color-border-bright: #2a3f5f;
+
+  --color-text-primary: #e8edf5;
+  --color-text-secondary: #7a8fa8;
+  --color-text-muted: #445569;
+
+  --color-accent: #00e676;
+  --color-accent-dim: #00e67620;
+  --color-accent-hover: #00ff85;
+
+  --color-pos-gk: #f59e0b;
+  --color-pos-def: #3b82f6;
+  --color-pos-mid: #00e676;
+  --color-pos-fwd: #f97316;
+
+  --color-fresh: #00e676;
+  --color-stale: #f59e0b;
+  --color-old: #ef4444;
+
+  --chart-1: #00e676;
+  --chart-2: #3b82f6;
+  --chart-3: #f97316;
+  --chart-4: #a855f7;
+  --chart-5: #f59e0b;
+
+  --font-display: "Barlow Condensed", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "DM Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--color-bg-primary);
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 15px;
+  letter-spacing: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--color-accent-dim);
+  color: var(--color-text-primary);
+}
+
+::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-bright);
+  border: 2px solid var(--color-bg-primary);
+  border-radius: 999px;
+}
+
+.typing-dot {
+  animation: typing-dot 1s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+@keyframes typing-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}

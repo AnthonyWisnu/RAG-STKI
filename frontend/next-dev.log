@@ -1,0 +1,383 @@
+
+> football-kg-rag-frontend@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 3.2s
+ ○ Compiling /predict ...
+ ✓ Compiled /predict in 6s (583 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 2.5s (586 modules)
+ ⨯ Error: Cannot find module './vendor-chunks/next.js'
+Require stack:
+- C:\laragon\www\RAG-STKI\frontend\.next\server\webpack-runtime.js
+- C:\laragon\www\RAG-STKI\frontend\.next\server\app\_not-found\page.js
+- C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\require.js
+- C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\load-components.js
+- C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\build\utils.js
+- C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\dev\hot-middleware.js
+- C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\lib\router-server.js
+- C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\lib\start-server.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1249:15)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\require-hook.js:55:36
+    at Function._load (node:internal/modules/cjs/loader:1075:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:315:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:218:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1340:12)
+    at mod.require (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:141:16)
+    at __webpack_require__.f.require (C:\laragon\www\RAG-STKI\frontend\.next\server\webpack-runtime.js:198:28)
+    at C:\laragon\www\RAG-STKI\frontend\.next\server\webpack-runtime.js:111:40
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (C:\laragon\www\RAG-STKI\frontend\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (C:\laragon\www\RAG-STKI\frontend\.next\server\webpack-runtime.js:162:22)
+    at C:\laragon\www\RAG-STKI\frontend\.next\server\app\_not-found\page.js:212:47
+    at Object.<anonymous> (C:\laragon\www\RAG-STKI\frontend\.next\server\app\_not-found\page.js:215:3)
+    at Module._compile (node:internal/modules/cjs/loader:1546:14)
+    at Object..js (node:internal/modules/cjs/loader:1689:10)
+    at Module.load (node:internal/modules/cjs/loader:1318:32)
+    at Function._load (node:internal/modules/cjs/loader:1128:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:315:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:218:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1340:12)
+    at mod.require (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:141:16)
+    at requirePage (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\require.js:109:84)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderErrorToResponseImpl (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\base-server.js:2090:30)
+    at async DevServer.pipeImpl (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\next-server.js:231:21)
+    at async DevServer.handleRequestImpl (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\base-server.js:818:17)
+    at async C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\laragon\\www\\RAG-STKI\\frontend\\.next\\server\\webpack-runtime.js',
+    'C:\\laragon\\www\\RAG-STKI\\frontend\\.next\\server\\app\\_not-found\\page.js',
+    'C:\\laragon\\www\\RAG-STKI\\frontend\\node_modules\\next\\dist\\server\\require.js',
+    'C:\\laragon\\www\\RAG-STKI\\frontend\\node_modules\\next\\dist\\server\\load-components.js',
+    'C:\\laragon\\www\\RAG-STKI\\frontend\\node_modules\\next\\dist\\build\\utils.js',
+    'C:\\laragon\\www\\RAG-STKI\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'C:\\laragon\\www\\RAG-STKI\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'C:\\laragon\\www\\RAG-STKI\\frontend\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'C:\\laragon\\www\\RAG-STKI\\frontend\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'C:\\laragon\\www\\RAG-STKI\\frontend\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /search in 19.5s (1539 modules)
+ ⨯ Internal error: Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\app-router.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Array.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+digest: "3373822029"
+ ⨯ Internal error: Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\client-page.js#ClientPageRoot" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Array.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+digest: "3199071053"
+ ⨯ Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\src\app\predict\page.tsx#default" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+digest: "3450747307"
+ ⨯ Internal error: Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\layout-router.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Array.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+digest: "2312871341"
+ ⨯ Internal error: Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\render-from-template-context.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Array.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+digest: "2981524813"
+ ⨯ Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\src\components\layout\Sidebar.tsx#Sidebar" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+digest: "2469975218"
+ ⨯ Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\src\components\layout\Header.tsx#Header" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+digest: "842870002"
+ ⨯     at stringify (<anonymous>)
+    at stringify (<anonymous>)
+digest: "1266215512"
+ ⨯     at stringify (<anonymous>)
+    at stringify (<anonymous>)
+digest: "1945073912"
+ ⨯ Internal error: Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\error-boundary.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Object.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+digest: "2238634689"
+ ⨯ Internal error: Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\app-router.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Array.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+digest: "3373822029"
+ ⨯ Internal error: Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\app-router.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Array.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+digest: "3373822029"
+ ⨯ Internal error: Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\client-page.js#ClientPageRoot" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Array.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+digest: "3199071053"
+ ⨯ Internal error: Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\layout-router.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Array.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+digest: "2312871341"
+ ⨯ Internal error: Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\render-from-template-context.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Array.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+digest: "2981524813"
+ ⨯ Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\src\components\layout\Sidebar.tsx#Sidebar" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+digest: "2469975218"
+ ⨯ Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\src\components\layout\Header.tsx#Header" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+digest: "842870002"
+ ⨯     at stringify (<anonymous>)
+    at stringify (<anonymous>)
+digest: "1266215512"
+ ⨯     at stringify (<anonymous>)
+    at stringify (<anonymous>)
+digest: "1945073912"
+ ⨯ Internal error: Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\error-boundary.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Object.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+digest: "2238634689"
+ ⨯ Internal error: Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\app-router.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Array.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+digest: "3373822029"
+ ⨯ Internal error: Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\app-router.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Array.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+digest: "3373822029"
+ ⨯ Internal error: Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\error-boundary.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Object.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+digest: "2238634689"
+Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\app-router.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Array.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7) {
+  digest: '3373822029'
+}
+ ⨯ Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\app-router.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Array.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7) {
+  digest: '3373822029',
+  page: '/predict'
+}
+ ⨯ Internal error: Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\app-router.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Array.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+digest: "3373822029"
+ ⨯ Internal error: Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\error-boundary.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Object.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+digest: "2238634689"
+Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\app-router.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Array.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7) {
+  digest: '3373822029'
+}
+ ⨯ Error: Could not find the module "c:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\client\components\app-router.js#" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268131
+    at eD (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:268326)
+    at eL (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:273210)
+    at C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267040
+    at Array.toJSON (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267504)
+    at stringify (<anonymous>)
+    at eJ (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:275872)
+    at eV (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:276390)
+    at Timeout._onTimeout (C:\laragon\www\RAG-STKI\frontend\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266177)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7) {
+  digest: '3373822029',
+  page: '/search'
+}
+ GET /search 500 in 16264ms
+ GET /predict 500 in 3188ms
+[?25h

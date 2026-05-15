@@ -1,0 +1,825 @@
+INFO 2026-05-14 16:07:20,033 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\laragon\www\RAG-STKI\backend\cache\soccerdata\config\teamname_replacements.json.
+
+INFO 2026-05-14 16:07:20,092 [_config.py:<module>:190]
+No custom league dict found. You can configure additional leagues in C:\laragon\www\RAG-STKI\backend\cache\soccerdata\config\league_dict.json.
+
+INFO 2026-05-14 16:07:20,162 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-05-14 16:08:40,476 [warnings.py:_showwarnmsg:112]
+C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-05-14 16:10:34,846 [fbref_scraper.py:_read_from_soccerdata:257]
+Fetch FBref selesai: rows=574 columns=25
+
+INFO 2026-05-14 16:10:35,297 [fbref_scraper.py:_write_cache:269]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\ENG-Premier_League_standard_2024-2025.parquet
+
+INFO 2026-05-14 16:10:35,302 [fbref_scraper.py:main:341]
+Selesai: cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\ENG-Premier_League_standard_2024-2025.parquet rows=574 columns=25 from_cache=False
+
+INFO 2026-05-14 16:10:47,492 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\laragon\www\RAG-STKI\backend\cache\soccerdata\config\teamname_replacements.json.
+
+INFO 2026-05-14 16:10:47,513 [_config.py:<module>:190]
+No custom league dict found. You can configure additional leagues in C:\laragon\www\RAG-STKI\backend\cache\soccerdata\config\league_dict.json.
+
+INFO 2026-05-14 16:10:47,530 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-05-14 16:10:56,961 [warnings.py:_showwarnmsg:112]
+C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-05-14 16:10:58,046 [fbref_scraper.py:_read_from_soccerdata:257]
+Fetch FBref selesai: rows=574 columns=25
+
+INFO 2026-05-14 16:10:58,109 [fbref_scraper.py:_write_cache:269]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\ENG-Premier_League_standard_2024-2025.parquet
+
+INFO 2026-05-14 16:10:58,117 [fbref_scraper.py:main:341]
+Selesai: cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\ENG-Premier_League_standard_2024-2025.parquet rows=574 columns=25 from_cache=False
+
+INFO 2026-05-14 16:27:52,710 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\laragon\www\RAG-STKI\backend\cache\soccerdata\config\teamname_replacements.json.
+
+INFO 2026-05-14 16:27:52,729 [_config.py:<module>:190]
+No custom league dict found. You can configure additional leagues in C:\laragon\www\RAG-STKI\backend\cache\soccerdata\config\league_dict.json.
+
+INFO 2026-05-14 16:27:52,751 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-05-14 16:28:01,732 [warnings.py:_showwarnmsg:112]
+C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-05-14 16:29:30,382 [fbref_scraper.py:_read_from_soccerdata:262]
+Fetch FBref selesai: rows=2852 columns=25
+
+INFO 2026-05-14 16:29:30,542 [fbref_scraper.py:_write_cache:274]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\standard_2023-2024.parquet
+
+INFO 2026-05-14 16:29:30,550 [initial_setup.py:fetch_all_fbref_stats:202]
+FBref ready: season=2023-2024 stat_type=standard rows=2852 columns=25 cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\standard_2023-2024.parquet
+
+INFO 2026-05-14 16:29:30,595 [fbref_scraper.py:_configure_soccerdata_environment:240]
+SOCCERDATA_DELAY=6
+
+INFO 2026-05-14 16:29:30,601 [fbref_scraper.py:_configure_soccerdata_environment:241]
+SOCCERDATA_DIR=C:\laragon\www\RAG-STKI\backend\cache\soccerdata
+
+INFO 2026-05-14 16:29:30,610 [fbref_scraper.py:_read_from_soccerdata:244]
+Fetch FBref dimulai: league=Big 5 European Leagues Combined season=2023-2024 stat_type=shooting
+
+INFO 2026-05-14 16:29:30,628 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-05-14 16:29:35,451 [warnings.py:_showwarnmsg:112]
+C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-05-14 16:30:11,778 [fbref_scraper.py:_read_from_soccerdata:262]
+Fetch FBref selesai: rows=2852 columns=19
+
+INFO 2026-05-14 16:30:11,801 [fbref_scraper.py:_write_cache:274]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\shooting_2023-2024.parquet
+
+INFO 2026-05-14 16:30:11,804 [initial_setup.py:fetch_all_fbref_stats:202]
+FBref ready: season=2023-2024 stat_type=shooting rows=2852 columns=19 cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\shooting_2023-2024.parquet
+
+INFO 2026-05-14 16:30:11,813 [fbref_scraper.py:_configure_soccerdata_environment:240]
+SOCCERDATA_DELAY=6
+
+INFO 2026-05-14 16:30:11,815 [fbref_scraper.py:_configure_soccerdata_environment:241]
+SOCCERDATA_DIR=C:\laragon\www\RAG-STKI\backend\cache\soccerdata
+
+INFO 2026-05-14 16:30:11,817 [fbref_scraper.py:_read_from_soccerdata:244]
+Fetch FBref dimulai: league=Big 5 European Leagues Combined season=2023-2024 stat_type=misc
+
+INFO 2026-05-14 16:30:11,821 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-05-14 16:30:15,940 [warnings.py:_showwarnmsg:112]
+C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-05-14 16:30:56,816 [fbref_scraper.py:_read_from_soccerdata:262]
+Fetch FBref selesai: rows=2852 columns=21
+
+INFO 2026-05-14 16:30:56,877 [fbref_scraper.py:_write_cache:274]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\misc_2023-2024.parquet
+
+INFO 2026-05-14 16:30:56,884 [initial_setup.py:fetch_all_fbref_stats:202]
+FBref ready: season=2023-2024 stat_type=misc rows=2852 columns=21 cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\misc_2023-2024.parquet
+
+INFO 2026-05-14 16:30:56,911 [fbref_scraper.py:_configure_soccerdata_environment:240]
+SOCCERDATA_DELAY=6
+
+INFO 2026-05-14 16:30:56,918 [fbref_scraper.py:_configure_soccerdata_environment:241]
+SOCCERDATA_DIR=C:\laragon\www\RAG-STKI\backend\cache\soccerdata
+
+INFO 2026-05-14 16:30:56,927 [fbref_scraper.py:_read_from_soccerdata:244]
+Fetch FBref dimulai: league=Big 5 European Leagues Combined season=2023-2024 stat_type=keeper
+
+INFO 2026-05-14 16:30:56,940 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-05-14 16:31:01,412 [warnings.py:_showwarnmsg:112]
+C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-05-14 16:31:33,722 [fbref_scraper.py:_read_from_soccerdata:262]
+Fetch FBref selesai: rows=203 columns=27
+
+INFO 2026-05-14 16:31:33,738 [fbref_scraper.py:_write_cache:274]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\keeper_2023-2024.parquet
+
+INFO 2026-05-14 16:31:33,741 [initial_setup.py:fetch_all_fbref_stats:202]
+FBref ready: season=2023-2024 stat_type=keeper rows=203 columns=27 cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\keeper_2023-2024.parquet
+
+INFO 2026-05-14 16:33:05,355 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\laragon\www\RAG-STKI\backend\cache\soccerdata\config\teamname_replacements.json.
+
+INFO 2026-05-14 16:33:05,375 [_config.py:<module>:190]
+No custom league dict found. You can configure additional leagues in C:\laragon\www\RAG-STKI\backend\cache\soccerdata\config\league_dict.json.
+
+INFO 2026-05-14 16:33:05,399 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-05-14 16:33:14,670 [warnings.py:_showwarnmsg:112]
+C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-05-14 16:33:47,671 [fbref_scraper.py:_read_from_soccerdata:262]
+Fetch FBref selesai: rows=2854 columns=25
+
+INFO 2026-05-14 16:33:47,695 [fbref_scraper.py:_write_cache:274]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\standard_2024-2025.parquet
+
+INFO 2026-05-14 16:33:47,698 [initial_setup.py:fetch_all_fbref_stats:204]
+FBref ready: season=2024-2025 stat_type=standard rows=2854 columns=25 cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\standard_2024-2025.parquet
+
+INFO 2026-05-14 16:33:47,714 [fbref_scraper.py:_configure_soccerdata_environment:240]
+SOCCERDATA_DELAY=6
+
+INFO 2026-05-14 16:33:47,715 [fbref_scraper.py:_configure_soccerdata_environment:241]
+SOCCERDATA_DIR=C:\laragon\www\RAG-STKI\backend\cache\soccerdata
+
+INFO 2026-05-14 16:33:47,718 [fbref_scraper.py:_read_from_soccerdata:244]
+Fetch FBref dimulai: league=Big 5 European Leagues Combined season=2024-2025 stat_type=shooting
+
+INFO 2026-05-14 16:33:47,724 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-05-14 16:33:51,286 [warnings.py:_showwarnmsg:112]
+C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-05-14 16:35:21,987 [fbref_scraper.py:_read_from_soccerdata:262]
+Fetch FBref selesai: rows=2854 columns=19
+
+INFO 2026-05-14 16:35:22,028 [fbref_scraper.py:_write_cache:274]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\shooting_2024-2025.parquet
+
+INFO 2026-05-14 16:35:22,032 [initial_setup.py:fetch_all_fbref_stats:204]
+FBref ready: season=2024-2025 stat_type=shooting rows=2854 columns=19 cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\shooting_2024-2025.parquet
+
+INFO 2026-05-14 16:35:22,055 [fbref_scraper.py:_configure_soccerdata_environment:240]
+SOCCERDATA_DELAY=6
+
+INFO 2026-05-14 16:35:22,060 [fbref_scraper.py:_configure_soccerdata_environment:241]
+SOCCERDATA_DIR=C:\laragon\www\RAG-STKI\backend\cache\soccerdata
+
+INFO 2026-05-14 16:35:22,066 [fbref_scraper.py:_read_from_soccerdata:244]
+Fetch FBref dimulai: league=Big 5 European Leagues Combined season=2024-2025 stat_type=misc
+
+INFO 2026-05-14 16:35:22,077 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-05-14 16:35:25,614 [warnings.py:_showwarnmsg:112]
+C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-05-14 16:37:25,154 [fbref_scraper.py:_read_from_soccerdata:262]
+Fetch FBref selesai: rows=2854 columns=21
+
+INFO 2026-05-14 16:37:25,219 [fbref_scraper.py:_write_cache:274]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\misc_2024-2025.parquet
+
+INFO 2026-05-14 16:37:25,231 [initial_setup.py:fetch_all_fbref_stats:204]
+FBref ready: season=2024-2025 stat_type=misc rows=2854 columns=21 cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\misc_2024-2025.parquet
+
+INFO 2026-05-14 16:37:25,264 [fbref_scraper.py:_configure_soccerdata_environment:240]
+SOCCERDATA_DELAY=6
+
+INFO 2026-05-14 16:37:25,270 [fbref_scraper.py:_configure_soccerdata_environment:241]
+SOCCERDATA_DIR=C:\laragon\www\RAG-STKI\backend\cache\soccerdata
+
+INFO 2026-05-14 16:37:25,278 [fbref_scraper.py:_read_from_soccerdata:244]
+Fetch FBref dimulai: league=Big 5 European Leagues Combined season=2024-2025 stat_type=keeper
+
+INFO 2026-05-14 16:37:25,286 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-05-14 16:37:33,557 [warnings.py:_showwarnmsg:112]
+C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-05-14 16:38:50,020 [fbref_scraper.py:_read_from_soccerdata:262]
+Fetch FBref selesai: rows=212 columns=27
+
+INFO 2026-05-14 16:38:50,028 [fbref_scraper.py:_write_cache:274]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\keeper_2024-2025.parquet
+
+INFO 2026-05-14 16:38:50,030 [initial_setup.py:fetch_all_fbref_stats:204]
+FBref ready: season=2024-2025 stat_type=keeper rows=212 columns=27 cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\keeper_2024-2025.parquet
+
+INFO 2026-05-14 16:38:50,050 [initial_setup.py:fetch_all_fbref_stats:214]
+Merged FBref season=2024-2025 rows=2854 columns=34
+
+INFO 2026-05-14 16:38:50,051 [fbref_scraper.py:_configure_soccerdata_environment:240]
+SOCCERDATA_DELAY=6
+
+INFO 2026-05-14 16:38:50,053 [fbref_scraper.py:_configure_soccerdata_environment:241]
+SOCCERDATA_DIR=C:\laragon\www\RAG-STKI\backend\cache\soccerdata
+
+INFO 2026-05-14 16:38:50,054 [fbref_scraper.py:_read_from_soccerdata:244]
+Fetch FBref dimulai: league=Big 5 European Leagues Combined season=2025-2026 stat_type=standard
+
+INFO 2026-05-14 16:38:50,056 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-05-14 16:38:54,841 [warnings.py:_showwarnmsg:112]
+C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-05-14 16:39:21,894 [fbref_scraper.py:_read_from_soccerdata:262]
+Fetch FBref selesai: rows=2795 columns=25
+
+INFO 2026-05-14 16:39:21,919 [fbref_scraper.py:_write_cache:274]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\standard_2025-2026.parquet
+
+INFO 2026-05-14 16:39:21,922 [initial_setup.py:fetch_all_fbref_stats:204]
+FBref ready: season=2025-2026 stat_type=standard rows=2795 columns=25 cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\standard_2025-2026.parquet
+
+INFO 2026-05-14 16:39:21,936 [fbref_scraper.py:_configure_soccerdata_environment:240]
+SOCCERDATA_DELAY=6
+
+INFO 2026-05-14 16:39:21,938 [fbref_scraper.py:_configure_soccerdata_environment:241]
+SOCCERDATA_DIR=C:\laragon\www\RAG-STKI\backend\cache\soccerdata
+
+INFO 2026-05-14 16:39:21,939 [fbref_scraper.py:_read_from_soccerdata:244]
+Fetch FBref dimulai: league=Big 5 European Leagues Combined season=2025-2026 stat_type=shooting
+
+INFO 2026-05-14 16:39:21,941 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-05-14 16:39:27,455 [warnings.py:_showwarnmsg:112]
+C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-05-14 16:39:48,429 [fbref_scraper.py:_read_from_soccerdata:262]
+Fetch FBref selesai: rows=2795 columns=19
+
+INFO 2026-05-14 16:39:48,448 [fbref_scraper.py:_write_cache:274]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\shooting_2025-2026.parquet
+
+INFO 2026-05-14 16:39:48,451 [initial_setup.py:fetch_all_fbref_stats:204]
+FBref ready: season=2025-2026 stat_type=shooting rows=2795 columns=19 cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\shooting_2025-2026.parquet
+
+INFO 2026-05-14 16:39:48,469 [fbref_scraper.py:_configure_soccerdata_environment:240]
+SOCCERDATA_DELAY=6
+
+INFO 2026-05-14 16:39:48,470 [fbref_scraper.py:_configure_soccerdata_environment:241]
+SOCCERDATA_DIR=C:\laragon\www\RAG-STKI\backend\cache\soccerdata
+
+INFO 2026-05-14 16:39:48,475 [fbref_scraper.py:_read_from_soccerdata:244]
+Fetch FBref dimulai: league=Big 5 European Leagues Combined season=2025-2026 stat_type=misc
+
+INFO 2026-05-14 16:39:48,483 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-05-14 16:39:52,208 [warnings.py:_showwarnmsg:112]
+C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-05-14 21:58:11,704 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\laragon\www\RAG-STKI\backend\cache\soccerdata\config\teamname_replacements.json.
+
+INFO 2026-05-14 21:58:11,724 [_config.py:<module>:190]
+No custom league dict found. You can configure additional leagues in C:\laragon\www\RAG-STKI\backend\cache\soccerdata\config\league_dict.json.
+
+INFO 2026-05-14 21:58:11,743 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-05-14 21:58:21,232 [warnings.py:_showwarnmsg:112]
+C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+ERROR 2026-05-14 21:59:01,492 [_common.py:_download_and_save:623]
+Error while scraping https://fbref.com/en/comps/Big5/misc/players/Big-5-European-Leagues-Stats. Retrying in 0 seconds... (attempt 1 of 5).
+Traceback (most recent call last):
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\_common.py", line 607, in _download_and_save
+    response = self._validate_page(url).encode("utf-8")
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py", line 1031, in _validate_page
+    raise Exception(
+Exception: Could not retrieve page content within timeout. Possible reasons: failed CAPTCHA, IP block or network issues.
+ERROR 2026-05-14 21:59:47,930 [_common.py:_download_and_save:623]
+Error while scraping https://fbref.com/en/comps/Big5/misc/players/Big-5-European-Leagues-Stats. Retrying in 10 seconds... (attempt 2 of 5).
+Traceback (most recent call last):
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\_common.py", line 607, in _download_and_save
+    response = self._validate_page(url).encode("utf-8")
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py", line 1031, in _validate_page
+    raise Exception(
+Exception: Could not retrieve page content within timeout. Possible reasons: failed CAPTCHA, IP block or network issues.
+INFO 2026-05-14 22:03:55,565 [fbref_scraper.py:_read_from_soccerdata:262]
+Fetch FBref selesai: rows=2795 columns=21
+
+INFO 2026-05-14 22:03:55,602 [fbref_scraper.py:_write_cache:274]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\misc_2025-2026.parquet
+
+INFO 2026-05-14 22:03:55,605 [initial_setup.py:fetch_all_fbref_stats:204]
+FBref ready: season=2025-2026 stat_type=misc rows=2795 columns=21 cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\misc_2025-2026.parquet
+
+INFO 2026-05-14 22:03:55,610 [fbref_scraper.py:_configure_soccerdata_environment:240]
+SOCCERDATA_DELAY=6
+
+INFO 2026-05-14 22:03:55,612 [fbref_scraper.py:_configure_soccerdata_environment:241]
+SOCCERDATA_DIR=C:\laragon\www\RAG-STKI\backend\cache\soccerdata
+
+INFO 2026-05-14 22:03:55,613 [fbref_scraper.py:_read_from_soccerdata:244]
+Fetch FBref dimulai: league=Big 5 European Leagues Combined season=2025-2026 stat_type=keeper
+
+INFO 2026-05-14 22:03:55,614 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-05-14 22:03:58,420 [warnings.py:_showwarnmsg:112]
+C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+ERROR 2026-05-14 22:04:30,568 [_common.py:_download_and_save:623]
+Error while scraping https://fbref.com/en/comps/Big5/keepers/players/Big-5-European-Leagues-Stats. Retrying in 0 seconds... (attempt 1 of 5).
+Traceback (most recent call last):
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\_common.py", line 607, in _download_and_save
+    response = self._validate_page(url).encode("utf-8")
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py", line 1031, in _validate_page
+    raise Exception(
+Exception: Could not retrieve page content within timeout. Possible reasons: failed CAPTCHA, IP block or network issues.
+ERROR 2026-05-14 22:05:14,758 [_common.py:_download_and_save:623]
+Error while scraping https://fbref.com/en/comps/Big5/keepers/players/Big-5-European-Leagues-Stats. Retrying in 10 seconds... (attempt 2 of 5).
+Traceback (most recent call last):
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\_common.py", line 607, in _download_and_save
+    response = self._validate_page(url).encode("utf-8")
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py", line 1031, in _validate_page
+    raise Exception(
+Exception: Could not retrieve page content within timeout. Possible reasons: failed CAPTCHA, IP block or network issues.
+ERROR 2026-05-14 22:06:03,270 [_common.py:_download_and_save:623]
+Error while scraping https://fbref.com/en/comps/Big5/keepers/players/Big-5-European-Leagues-Stats. Retrying in 20 seconds... (attempt 3 of 5).
+Traceback (most recent call last):
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\_common.py", line 607, in _download_and_save
+    response = self._validate_page(url).encode("utf-8")
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jatia\AppData\Local\Programs\Python\Python312\Lib\site-packages\soccerdata\fbref.py", line 1031, in _validate_page
+    raise Exception(
+Exception: Could not retrieve page content within timeout. Possible reasons: failed CAPTCHA, IP block or network issues.
+INFO 2026-05-14 22:10:15,955 [fbref_scraper.py:_read_from_soccerdata:262]
+Fetch FBref selesai: rows=179 columns=27
+
+INFO 2026-05-14 22:10:15,967 [fbref_scraper.py:_write_cache:274]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\keeper_2025-2026.parquet
+
+INFO 2026-05-14 22:10:15,971 [initial_setup.py:fetch_all_fbref_stats:204]
+FBref ready: season=2025-2026 stat_type=keeper rows=179 columns=27 cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\keeper_2025-2026.parquet
+
+INFO 2026-05-14 22:10:16,001 [initial_setup.py:fetch_all_fbref_stats:214]
+Merged FBref season=2025-2026 rows=2795 columns=34
+
+INFO 2026-05-14 22:10:16,876 [player_id_mapper.py:build_player_candidates:179]
+Kandidat Transfermarkt dibuat: 47637 pemain
+
+INFO 2026-05-14 22:22:44,896 [initial_setup.py:build_graph_records:418]
+Graph records siap: 5170
+
+INFO 2026-05-14 22:22:44,900 [initial_setup.py:build_graph_records:419]
+Unmatched FBref rows: 541
+
+INFO 2026-05-14 22:22:44,903 [initial_setup.py:build_graph_records:420]
+Filtered rows: 1286
+
+INFO 2026-05-14 22:22:44,905 [initial_setup.py:build_graph_records:421]
+Mapped unique players: 2635
+
+INFO 2026-05-14 22:22:45,510 [initial_setup.py:build_valuation_records:451]
+Valuation records siap: 51584
+
+INFO 2026-05-14 22:22:51,424 [neo4j_loader.py:verify_connectivity:62]
+Koneksi Neo4j berhasil
+
+INFO 2026-05-14 22:22:52,504 [neo4j_loader.py:setup_constraints:79]
+Constraint Neo4j siap
+
+INFO 2026-05-14 22:22:55,594 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=250
+
+INFO 2026-05-14 22:22:56,894 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=500
+
+INFO 2026-05-14 22:22:58,107 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=750
+
+INFO 2026-05-14 22:22:58,820 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=1000
+
+INFO 2026-05-14 22:23:01,677 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=1250
+
+INFO 2026-05-14 22:23:02,397 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=1500
+
+INFO 2026-05-14 22:23:03,014 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=1750
+
+INFO 2026-05-14 22:23:03,718 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=2000
+
+INFO 2026-05-14 22:23:04,498 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=2250
+
+INFO 2026-05-14 22:23:05,422 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=2500
+
+INFO 2026-05-14 22:23:05,860 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=2750
+
+INFO 2026-05-14 22:23:06,333 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=3000
+
+INFO 2026-05-14 22:23:06,745 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=3250
+
+INFO 2026-05-14 22:23:07,159 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=3500
+
+INFO 2026-05-14 22:23:07,574 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=3750
+
+INFO 2026-05-14 22:23:07,985 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=4000
+
+INFO 2026-05-14 22:23:08,616 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=4250
+
+INFO 2026-05-14 22:23:09,236 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=4500
+
+INFO 2026-05-14 22:23:10,017 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=4750
+
+INFO 2026-05-14 22:23:10,956 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 250 total=5000
+
+INFO 2026-05-14 22:23:16,997 [neo4j_loader.py:load_player_stats:123]
+Loaded PlayerSeasonStats batch: 170 total=5170
+
+INFO 2026-05-14 22:23:17,343 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=500
+
+INFO 2026-05-14 22:23:17,558 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=1000
+
+INFO 2026-05-14 22:23:17,715 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=1500
+
+INFO 2026-05-14 22:23:17,970 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=2000
+
+INFO 2026-05-14 22:23:18,105 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=2500
+
+INFO 2026-05-14 22:23:18,219 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=3000
+
+INFO 2026-05-14 22:23:18,387 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=3500
+
+INFO 2026-05-14 22:23:18,650 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=4000
+
+INFO 2026-05-14 22:23:18,844 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=4500
+
+INFO 2026-05-14 22:23:18,998 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=5000
+
+INFO 2026-05-14 22:23:19,136 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=5500
+
+INFO 2026-05-14 22:23:19,430 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=6000
+
+INFO 2026-05-14 22:23:19,538 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=6500
+
+INFO 2026-05-14 22:23:19,673 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=7000
+
+INFO 2026-05-14 22:23:19,855 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=7500
+
+INFO 2026-05-14 22:23:19,969 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=8000
+
+INFO 2026-05-14 22:23:20,123 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=8500
+
+INFO 2026-05-14 22:23:20,253 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=9000
+
+INFO 2026-05-14 22:23:20,419 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=9500
+
+INFO 2026-05-14 22:23:20,951 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=10000
+
+INFO 2026-05-14 22:23:21,156 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=10500
+
+INFO 2026-05-14 22:23:21,307 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=11000
+
+INFO 2026-05-14 22:23:21,454 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=11500
+
+INFO 2026-05-14 22:23:21,578 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=12000
+
+INFO 2026-05-14 22:23:21,717 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=12500
+
+INFO 2026-05-14 22:23:21,864 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=13000
+
+INFO 2026-05-14 22:23:21,985 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=13500
+
+INFO 2026-05-14 22:23:22,185 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=14000
+
+INFO 2026-05-14 22:23:22,360 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=14500
+
+INFO 2026-05-14 22:23:22,479 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=15000
+
+INFO 2026-05-14 22:23:22,584 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=15500
+
+INFO 2026-05-14 22:23:22,704 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=16000
+
+INFO 2026-05-14 22:23:22,809 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=16500
+
+INFO 2026-05-14 22:23:23,146 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=17000
+
+INFO 2026-05-14 22:23:23,277 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=17500
+
+INFO 2026-05-14 22:23:23,475 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=18000
+
+INFO 2026-05-14 22:23:23,771 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=18500
+
+INFO 2026-05-14 22:23:23,982 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=19000
+
+INFO 2026-05-14 22:23:24,112 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=19500
+
+INFO 2026-05-14 22:23:24,266 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=20000
+
+INFO 2026-05-14 22:23:24,454 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=20500
+
+INFO 2026-05-14 22:23:24,556 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=21000
+
+INFO 2026-05-14 22:23:24,704 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=21500
+
+INFO 2026-05-14 22:23:24,860 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=22000
+
+INFO 2026-05-14 22:23:25,202 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=22500
+
+INFO 2026-05-14 22:23:25,388 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=23000
+
+INFO 2026-05-14 22:23:25,505 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=23500
+
+INFO 2026-05-14 22:23:25,710 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=24000
+
+INFO 2026-05-14 22:23:25,824 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=24500
+
+INFO 2026-05-14 22:23:26,003 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=25000
+
+INFO 2026-05-14 22:23:27,810 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=25500
+
+INFO 2026-05-14 22:23:27,936 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=26000
+
+INFO 2026-05-14 22:23:28,142 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=26500
+
+INFO 2026-05-14 22:23:28,385 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=27000
+
+INFO 2026-05-14 22:23:28,518 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=27500
+
+INFO 2026-05-14 22:23:28,666 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=28000
+
+INFO 2026-05-14 22:23:28,761 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=28500
+
+INFO 2026-05-14 22:23:29,001 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=29000
+
+INFO 2026-05-14 22:23:29,288 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=29500
+
+INFO 2026-05-14 22:23:29,467 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=30000
+
+INFO 2026-05-14 22:23:29,586 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=30500
+
+INFO 2026-05-14 22:23:29,688 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=31000
+
+INFO 2026-05-14 22:23:29,774 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=31500
+
+INFO 2026-05-14 22:23:29,871 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=32000
+
+INFO 2026-05-14 22:23:29,994 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=32500
+
+INFO 2026-05-14 22:23:30,182 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=33000
+
+INFO 2026-05-14 22:23:30,405 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=33500
+
+INFO 2026-05-14 22:23:30,560 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=34000
+
+INFO 2026-05-14 22:23:30,697 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=34500
+
+INFO 2026-05-14 22:23:30,805 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=35000
+
+INFO 2026-05-14 22:23:31,041 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=35500
+
+INFO 2026-05-14 22:23:31,321 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=36000
+
+INFO 2026-05-14 22:23:31,527 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=36500
+
+INFO 2026-05-14 22:23:31,620 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=37000
+
+INFO 2026-05-14 22:23:31,785 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=37500
+
+INFO 2026-05-14 22:23:31,985 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=38000
+
+INFO 2026-05-14 22:23:32,149 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=38500
+
+INFO 2026-05-14 22:23:32,444 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=39000
+
+INFO 2026-05-14 22:23:32,607 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=39500
+
+INFO 2026-05-14 22:23:32,941 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=40000
+
+INFO 2026-05-14 22:23:33,049 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=40500
+
+INFO 2026-05-14 22:23:33,155 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=41000
+
+INFO 2026-05-14 22:23:33,263 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=41500
+
+INFO 2026-05-14 22:23:33,415 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=42000
+
+INFO 2026-05-14 22:23:33,534 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=42500
+
+INFO 2026-05-14 22:23:33,644 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=43000
+
+INFO 2026-05-14 22:23:34,180 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=43500
+
+INFO 2026-05-14 22:23:34,390 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=44000
+
+INFO 2026-05-14 22:23:34,481 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=44500
+
+INFO 2026-05-14 22:23:34,592 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=45000
+
+INFO 2026-05-14 22:23:34,696 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=45500
+
+INFO 2026-05-14 22:23:34,828 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=46000
+
+INFO 2026-05-14 22:23:35,013 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=46500
+
+INFO 2026-05-14 22:23:35,219 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=47000
+
+INFO 2026-05-14 22:23:35,472 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=47500
+
+INFO 2026-05-14 22:23:35,607 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=48000
+
+INFO 2026-05-14 22:23:35,818 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=48500
+
+INFO 2026-05-14 22:23:35,924 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=49000
+
+INFO 2026-05-14 22:23:36,078 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=49500
+
+INFO 2026-05-14 22:23:36,227 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=50000
+
+INFO 2026-05-14 22:23:36,395 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=50500
+
+INFO 2026-05-14 22:23:36,498 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=51000
+
+INFO 2026-05-14 22:23:36,735 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 500 total=51500
+
+INFO 2026-05-14 22:23:36,898 [neo4j_loader.py:load_valuations:148]
+Loaded Valuation batch: 84 total=51584
+
+INFO 2026-05-14 22:23:36,936 [initial_setup.py:backup_fbref_cache:462]
+Backup cache FBref dibuat: C:\laragon\www\RAG-STKI\backend\cache\fbref_backup_20260514_142336
+
+INFO 2026-05-14 22:23:36,938 [initial_setup.py:main:538]
+refresh_state.json updated: {'initial_setup_completed': True, 'last_initial_setup': '2026-05-14T14:23:36+00:00', 'last_refresh': '2026-05-14T14:23:36+00:00', 'stats_records': 5170, 'valuation_records': 51584, 'mapped_players': 2635}
+
+INFO 2026-05-14 22:23:36,942 [initial_setup.py:main:539]
+Initial setup selesai
+
