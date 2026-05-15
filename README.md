@@ -884,7 +884,7 @@ Itu sesuai desain. Scope sistem hanya lima liga top Eropa. Pertanyaan UCL akan d
 ## Kontributor
 
 **Anthony**  
-Program Studi Sistem Informasi, Universitas Udayana
+Program Studi Teknologi Informasi, Universitas Udayana
 
 ## Lisensi
 
