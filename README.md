@@ -139,106 +139,85 @@ Catatan data penting:
 
 ### Backend Stack
 
-```text
-Python 3.11
-|
-+-- FastAPI 0.115              API server dan OpenAPI docs
-+-- Pydantic 2.x               Request dan response validation
-+-- Neo4j 5.27                 Knowledge Graph driver
-+-- ChromaDB 0.5               Persistent vector store
-+-- sentence-transformers 3.3  Embedding lokal multilingual-e5-base
-+-- OpenAI 1.58                LLM planner, Cypher helper, synthesis, valuation reasoning
-+-- soccerdata 1.9             FBref scraper untuk statistik publik
-+-- Kaggle API 1.6             Transfermarkt dataset loader
-+-- pandas 2.2 + pyarrow       Data processing dan parquet cache
-+-- wikipedia-api 0.7          Wikipedia summary cache
-+-- RAGAS 0.2                  Optional evaluator, fallback manual rubric tersedia
-+-- uvicorn 0.34               ASGI server
-```
+| Library / Package | Versi | Fungsi |
+|---|---|---|
+| FastAPI | 0.115 | API server dan OpenAPI docs |
+| Pydantic | 2.x | Request dan response validation |
+| Neo4j driver | 5.27 | Knowledge Graph driver |
+| ChromaDB | 0.5 | Persistent vector store |
+| sentence-transformers | 3.3 | Embedding lokal multilingual-e5-base |
+| OpenAI | 1.58 | LLM planner, Cypher helper, synthesis, valuation reasoning |
+| soccerdata | 1.9 | FBref scraper untuk statistik publik |
+| Kaggle API | 1.6 | Transfermarkt dataset loader |
+| pandas + pyarrow | 2.2 | Data processing dan parquet cache |
+| wikipedia-api | 0.7 | Wikipedia summary cache |
+| RAGAS | 0.2 | Optional evaluator, fallback manual rubric tersedia |
+| uvicorn | 0.34 | ASGI server |
 
 ### Frontend Stack
 
-```text
-Node.js 20+
-|
-+-- Next.js 14                 App Router
-+-- React 18                   UI library
-+-- TypeScript 5               Type safety
-+-- Tailwind CSS 3             Design tokens dan utility styling
-+-- lucide-react               Icon library
-+-- Recharts 2                 Radar, line, bar, dan donut chart
-+-- Framer Motion 11           Micro-interaction dan transition
-```
+| Library / Package | Versi | Fungsi |
+|---|---|---|
+| Next.js | 14 | App Router |
+| React | 18 | UI library |
+| TypeScript | 5 | Type safety |
+| Tailwind CSS | 3 | Design tokens dan utility styling |
+| lucide-react | latest | Icon library |
+| Recharts | 2 | Radar, line, bar, dan donut chart |
+| Framer Motion | 11 | Micro-interaction dan transition |
 
 ### Infrastruktur Data
 
-```text
-Neo4j Aura / Local Neo4j        Knowledge Graph
-ChromaDB persistent            Vector document retrieval
-FBref via soccerdata           Statistik pemain
-Kaggle Transfermarkt           Profil dan histori valuasi pemain
-Wikipedia local cache          Ringkasan naratif tambahan
-OpenAI API                     LLM reasoning dan answer synthesis
-```
+| Komponen | Fungsi |
+|---|---|
+| Neo4j Aura / Local Neo4j | Knowledge Graph |
+| ChromaDB persistent | Vector document retrieval |
+| FBref via soccerdata | Statistik pemain |
+| Kaggle Transfermarkt | Profil dan histori valuasi pemain |
+| Wikipedia local cache | Ringkasan naratif tambahan |
+| OpenAI API | LLM reasoning dan answer synthesis |
 
 ## Arsitektur Sistem
 
 ### High-Level Architecture
 
-```text
-                         +--------------------------------------+
-                         |          FRONTEND (Next.js)          |
-                         | /chat /compare /search /valuation   |
-                         | /predict /top /club                 |
-                         +------------------+-------------------+
-                                            |
-                                            | HTTP / JSON
-                                            v
-             +-------------------------------------------------------------+
-             |                  FASTAPI BACKEND (Python)                   |
-             |                                                             |
-             |  +-------------------------------------------------------+  |
-             |  |              Agentic Router                           |  |
-             |  | Language Detection -> Strategy Selection -> Execution |  |
-             |  +-----------+----------------+--------------------------+  |
-             |              |                |                             |
-             |              v                v                             |
-             |       +------+-----+   +------+-------+                     |
-             |       | KG         |   | Vector       |                     |
-             |       | Retriever  |   | Retriever    |                     |
-             |       +------+-----+   +------+-------+                     |
-             |              |                |                             |
-             |              v                v                             |
-             |          +---+---+       +----+-----+                       |
-             |          | Neo4j |       | ChromaDB |                       |
-             |          | KG    |       | Vector   |                       |
-             |          +---+---+       +----+-----+                       |
-             |              |                |                             |
-             |              +--------+-------+                             |
-             |                       |                                     |
-             |                       v                                     |
-             |         +-------------+---------------+                     |
-             |         | LLM Answer Synthesis        |                     |
-             |         | Bilingual answer + citation |                     |
-             |         +-----------------------------+                     |
-             |                                                             |
-             |  +-------------------------------------------------------+  |
-             |  | LLM Valuation Reasoner                               |  |
-             |  | KG context + valuation history -> estimated range     |  |
-             |  +-------------------------------------------------------+  |
-             +-------------------------------------------------------------+
-                                            ^
-                                            |
-                 +--------------------------+--------------------------+
-                 |                    ETL Pipeline                     |
-                 +--------------+------------------+-------------------+
-                                |                  |
-                                v                  v
-                         +------+-----+     +------+------+
-                         | FBref      |     | Kaggle      |
-                         | Scraper    |     | Loader      |
-                         +------------+     +-------------+
+<details>
+<summary>Lihat diagram arsitektur lengkap</summary>
+
 ```
+FRONTEND (Next.js)
+  /chat  /compare  /search  /valuation  /predict  /top  /club
+       |
+       |  HTTP / JSON
+       v
++------------------------------------------+
+|         FASTAPI BACKEND (Python)         |
+|                                          |
+|  [ Agentic Router ]                      |
+|  Language Detection -> Strategy Select   |
+|         |                  |             |
+|         v                  v             |
+|   [ KG Retriever ]  [ Vector Retriever ] |
+|         |                  |             |
+|         v                  v             |
+|      [ Neo4j ]         [ ChromaDB ]      |
+|         |                  |             |
+|         +--------+---------+             |
+|                  v                       |
+|     [ LLM Answer Synthesis ]             |
+|     Bilingual answer + citation          |
+|                                          |
+|  [ LLM Valuation Reasoner ]              |
+|  KG context + history -> range estimate  |
++------------------------------------------+
+       ^
+       |
+  [ ETL Pipeline ]
+   /           \
+[FBref]     [Kaggle]
+```
+
+</details>
 
 ### Strategi Retrieval
 
@@ -253,105 +232,94 @@ OpenAI API                     LLM reasoning dan answer synthesis
 
 ### Alur ETL: Initial Setup
 
-```text
-+-------------------------------------------------------------------+
-|                       INITIAL SETUP, sekali                       |
-+-------------------------------------------------------------------+
-| 1. Load env dan validasi konfigurasi                              |
-| 2. Download Kaggle Transfermarkt dataset                          |
-| 3. Fetch FBref Big 5 untuk 4 stat_type publik                     |
-|    - standard, shooting, keeper, misc                             |
-|    - cache parquet ke backend/cache/fbref                         |
-|    - delay minimal 6 detik antar request                          |
-| 4. Normalisasi Transfermarkt dan FBref                            |
-| 5. Mapping FBref player id ke Transfermarkt player id             |
-| 6. Filter pemain relevan                                          |
-| 7. MERGE Player, Club, League, Season, Stats, Valuation ke Neo4j   |
-| 8. Generate profile, wiki summary, dan valuation narrative docs    |
-| 9. Embed dokumen dengan multilingual-e5-base                      |
-| 10. Upsert dokumen ke ChromaDB                                    |
-| 11. Update backend/data/refresh_state.json                        |
-| 12. Backup snapshot cache FBref                                   |
-+-------------------------------------------------------------------+
+<details>
+<summary>Lihat diagram Alur ETL: Initial Setup</summary>
+
 ```
+INITIAL SETUP (dijalankan sekali)
+
+ 1.  Load env dan validasi konfigurasi
+ 2.  Download Kaggle Transfermarkt dataset
+ 3.  Fetch FBref Big 5 untuk 4 stat_type publik
+       - standard, shooting, keeper, misc
+       - cache parquet ke backend/cache/fbref
+       - delay minimal 6 detik antar request
+ 4.  Normalisasi Transfermarkt dan FBref
+ 5.  Mapping FBref player id ke Transfermarkt player id
+ 6.  Filter pemain relevan
+ 7.  MERGE Player, Club, League, Season, Stats, Valuation ke Neo4j
+ 8.  Generate profile, wiki summary, dan valuation narrative docs
+ 9.  Embed dokumen dengan multilingual-e5-base
+ 10. Upsert dokumen ke ChromaDB
+ 11. Update backend/data/refresh_state.json
+ 12. Backup snapshot cache FBref
+```
+
+</details>
 
 ### Alur Refresh Data
 
-```text
+<details>
+<summary>Lihat diagram Alur Refresh Data</summary>
+
+```
 Sidebar button / CLI manual_refresh.py
         |
         v
-+------------------------------+
-| Baca refresh_state.json      |
-+--------------+---------------+
-               |
-               v
-+------------------------------+
-| Cek throttle 24 jam          |
-| force=false -> skip jika baru|
-+--------------+---------------+
-               |
-               v
-+------------------------------+
-| Jalankan refresh background  |
-| Tidak menjalankan initial    |
-| setup ulang                  |
-+--------------+---------------+
-               |
-               v
-+------------------------------+
-| Update status, counts,       |
-| timestamp, error/skip reason |
-+------------------------------+
+   Baca refresh_state.json
+        |
+        v
+   Cek throttle 24 jam
+   force=false -> skip jika baru direfresh
+        |
+        v
+   Jalankan refresh background
+   (tidak mengulang initial setup)
+        |
+        v
+   Update status, counts, timestamp, error/skip reason
 ```
+
+</details>
 
 Catatan: jalur refresh saat ini state-aware dan aman untuk demo. Refresh tidak menghapus graph dan tidak mengulang initial setup dari nol.
 
 ### Alur Query Runtime
 
-```text
+<details>
+<summary>Lihat diagram Alur Query Runtime</summary>
+
+```
 User Input
     |
     v
-+------------------------------+      -> id / en
-| Language Detection           |
-| langdetect + hints           |
-+--------------+---------------+
-               |
-               v
-+------------------------------+      -> early exit jika UCL
-| Scope Guard                  |
-| Big 5 only                   |
-+--------------+---------------+
-               |
-               v
-+------------------------------+      -> {strategy, reason}
-| Agentic Router               |
-| heuristic + optional LLM     |
-+--------------+---------------+
-               |
-               v
-+-------------------------------------------------------------------+
-|                  Execute Selected Strategy                         |
-+-------------------------------------------------------------------+
-| kg_only:              Cypher/template -> Neo4j                     |
-| vector_only:          query embedding -> ChromaDB                  |
-| hybrid:               Neo4j + ChromaDB -> merged context           |
-| valuation_reasoning:  KG context -> LLM estimated range            |
-+------------------------------+------------------------------------+
-                               |
-                               v
-                    Fallback jika context kosong
-                               |
-                               v
-+------------------------------+      -> bilingual answer
-| Answer Synthesis             |         + citations
-| deterministic / LLM          |
-+--------------+---------------+
-               |
-               v
+Language Detection (langdetect + hints)
+    |-- output: id / en
+    v
+Scope Guard (Big 5 only)
+    |-- early exit jika query UCL
+    v
+Agentic Router (heuristic + optional LLM)
+    |-- output: {strategy, reason}
+    v
+Execute Selected Strategy
+    |
+    +-- kg_only:             Cypher/template -> Neo4j
+    +-- vector_only:         query embedding -> ChromaDB
+    +-- hybrid:              Neo4j + ChromaDB -> merged context
+    +-- valuation_reasoning: KG context -> LLM estimated range
+    |
+    v
+Fallback jika context kosong
+    |
+    v
+Answer Synthesis (deterministic / LLM)
+    |-- output: bilingual answer + citations
+    v
 Response
 ```
+
+</details>
 
 ## Struktur Data
 
@@ -751,88 +719,75 @@ Catatan: hasil bergantung pada data Neo4j lokal yang sudah di-load dari ETL.
 
 ## Struktur Project
 
-```text
+```
 RAG-STKI/
-|
-+-- AGENT.md
-+-- DESIGN.md
-+-- PLAN.md
-+-- README.md
-|
-+-- backend/
-|   +-- main.py
-|   +-- requirements.txt
-|   +-- .env.example
-|   |
-|   +-- api/
-|   |   +-- routes/
-|   |   |   +-- chat.py
-|   |   |   +-- players.py
-|   |   |   +-- clubs.py
-|   |   |   +-- compare.py
-|   |   |   +-- predict.py
-|   |   |   +-- health.py
-|   |   |   +-- refresh.py
-|   |   +-- schemas/
-|   |
-|   +-- config/
-|   |   +-- settings.py
-|   |   +-- prompts/
-|   |
-|   +-- etl/
-|   |   +-- initial_setup.py
-|   |   +-- manual_refresh.py
-|   |   +-- state_tracker.py
-|   |   +-- fbref_scraper.py
-|   |   +-- kaggle_loader.py
-|   |   +-- player_id_mapper.py
-|   |   +-- neo4j_loader.py
-|   |   +-- document_generator.py
-|   |   +-- chroma_loader.py
-|   |
-|   +-- src/
-|   |   +-- retrieval/
-|   |   +-- valuation/
-|   |   +-- llm/
-|   |   +-- utils/
-|   |
-|   +-- data/
-|   |   +-- raw/
-|   |   +-- processed/
-|   |   +-- chroma/
-|   |   +-- refresh_state.json
-|   |
-|   +-- cache/
-|   |   +-- fbref/
-|   |   +-- wiki/
-|   |
-|   +-- evaluation/
-|
-+-- frontend/
-    +-- package.json
-    +-- next.config.js
-    +-- tailwind.config.js
-    +-- .env.local.example
-    |
-    +-- src/
-        +-- app/
-        |   +-- chat/
-        |   +-- compare/
-        |   +-- search/
-        |   +-- valuation/
-        |   +-- predict/
-        |   +-- top/
-        |   +-- club/
-        |
-        +-- components/
-        |   +-- layout/
-        |   +-- player/
-        |   +-- compare/
-        |   +-- charts/
-        |   +-- ui/
-        |
-        +-- lib/
-        +-- types/
+├── AGENT.md
+├── DESIGN.md
+├── PLAN.md
+├── README.md
+├── backend/
+│   ├── main.py
+│   ├── requirements.txt
+│   ├── .env.example
+│   ├── api/
+│   │   ├── routes/
+│   │   │   ├── chat.py
+│   │   │   ├── players.py
+│   │   │   ├── clubs.py
+│   │   │   ├── compare.py
+│   │   │   ├── predict.py
+│   │   │   ├── health.py
+│   │   │   └── refresh.py
+│   │   └── schemas/
+│   ├── config/
+│   │   ├── settings.py
+│   │   └── prompts/
+│   ├── etl/
+│   │   ├── initial_setup.py
+│   │   ├── manual_refresh.py
+│   │   ├── state_tracker.py
+│   │   ├── fbref_scraper.py
+│   │   ├── kaggle_loader.py
+│   │   ├── player_id_mapper.py
+│   │   ├── neo4j_loader.py
+│   │   ├── document_generator.py
+│   │   └── chroma_loader.py
+│   ├── src/
+│   │   ├── retrieval/
+│   │   ├── valuation/
+│   │   ├── llm/
+│   │   └── utils/
+│   ├── data/
+│   │   ├── raw/
+│   │   ├── processed/
+│   │   ├── chroma/
+│   │   └── refresh_state.json
+│   ├── cache/
+│   │   ├── fbref/
+│   │   └── wiki/
+│   └── evaluation/
+└── frontend/
+    ├── package.json
+    ├── next.config.js
+    ├── tailwind.config.js
+    ├── .env.local.example
+    └── src/
+        ├── app/
+        │   ├── chat/
+        │   ├── compare/
+        │   ├── search/
+        │   ├── valuation/
+        │   ├── predict/
+        │   ├── top/
+        │   └── club/
+        ├── components/
+        │   ├── layout/
+        │   ├── player/
+        │   ├── compare/
+        │   ├── charts/
+        │   └── ui/
+        ├── lib/
+        └── types/
 ```
 
 ## Troubleshooting
