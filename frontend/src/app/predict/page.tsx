@@ -88,7 +88,7 @@ export default function PredictPage() {
     <div className="space-y-6">
       <section className="space-y-4">
         <SectionHeading title="Pilih Pemain" />
-        <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_220px]">
+        <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,1fr)_220px]">
           <PlayerSelector
             selectedPlayer={selectedPlayer}
             onSelect={(player) => {

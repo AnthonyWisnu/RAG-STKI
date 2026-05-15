@@ -27,8 +27,8 @@ type ChatMessage = {
 
 const quickQuestions = [
   "Siapa top scorer La Liga musim ini?",
-  "Bagaimana gaya bermain Pedri?",
-  "Bandingkan Salah dan Son sebagai winger",
+  "Siapa pemain statistik mirip Ferran Torres tetapi market value lebih rendah?",
+  "Bandingkan Erling Haaland dan Kylian Mbappé sebagai Forward",
   "Berapa estimasi nilai pasar Yamal?"
 ];
 

@@ -10,9 +10,10 @@ type ClubSelectorProps = {
   selectedClub: ClubSearchItem | null;
   season: string;
   onSelect: (club: ClubSearchItem) => void;
+  label?: string;
 };
 
-export function ClubSelector({ selectedClub, season, onSelect }: ClubSelectorProps) {
+export function ClubSelector({ selectedClub, season, onSelect, label = "Klub" }: ClubSelectorProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<ClubSearchItem[]>([]);
   const [open, setOpen] = useState(false);
@@ -47,18 +48,20 @@ export function ClubSelector({ selectedClub, season, onSelect }: ClubSelectorPro
   }, [query, season]);
 
   return (
-    <div className="relative">
-      <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" />
-      <input
-        value={query}
-        onFocus={() => setOpen(true)}
-        onChange={(event) => {
-          setQuery(event.target.value);
-          setOpen(true);
-        }}
-        placeholder={selectedClub?.name ?? "Cari klub..."}
-        className="h-12 w-full rounded-panel border border-border bg-background-secondary pl-10 pr-4 text-sm text-text-primary placeholder:text-text-muted focus:border-accent focus:outline-none"
-      />
+    <div className="space-y-2">
+      <span className="block text-xs uppercase tracking-widest text-text-secondary">{label}</span>
+      <div className="relative">
+        <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" />
+        <input
+          value={query}
+          onFocus={() => setOpen(true)}
+          onChange={(event) => {
+            setQuery(event.target.value);
+            setOpen(true);
+          }}
+          placeholder={selectedClub?.name ?? "Cari klub..."}
+          className="h-12 w-full rounded-panel border border-border bg-background-secondary pl-10 pr-4 text-sm text-text-primary placeholder:text-text-muted focus:border-accent focus:outline-none"
+        />
       {open ? (
       <div className="absolute left-0 right-0 top-14 z-30 max-h-96 overflow-auto rounded-panel border border-border bg-background-secondary p-2 shadow-panel">
         {loading ? (
@@ -92,6 +95,7 @@ export function ClubSelector({ selectedClub, season, onSelect }: ClubSelectorPro
         )}
       </div>
       ) : null}
+      </div>
     </div>
   );
 }

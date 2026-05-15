@@ -12,12 +12,14 @@ type PlayerSelectorProps = {
   selectedPlayer: PlayerSummary | null;
   onSelect: (player: PlayerSummary | null) => void;
   placeholder?: string;
+  label?: string;
 };
 
 export function PlayerSelector({
   selectedPlayer,
   onSelect,
-  placeholder = "Cari pemain..."
+  placeholder = "Cari pemain...",
+  label = "Pemain"
 }: PlayerSelectorProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<PlayerSummary[]>([]);
@@ -65,38 +67,41 @@ export function PlayerSelector({
 
   return (
     <div className="space-y-3">
-      <div className="relative">
-        <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" />
-        <input
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder={placeholder}
-          className="h-12 w-full rounded-panel border border-border bg-background-secondary pl-10 pr-4 text-sm text-text-primary placeholder:text-text-muted focus:border-accent focus:outline-none"
-        />
-        {query.trim().length >= 3 ? (
-          <div className="absolute left-0 right-0 top-14 z-30 max-h-96 overflow-auto rounded-panel border border-border bg-background-secondary p-2 shadow-panel">
-            {loading ? (
-              <div className="p-3 text-sm text-text-secondary">Mencari pemain...</div>
-            ) : results.length > 0 ? (
-              <div className="space-y-2">
-                {results.map((player) => (
-                  <button
-                    key={player.player_id}
-                    type="button"
-                    onClick={() => selectPlayer(player)}
-                    className="w-full text-left"
-                  >
-                    <PlayerCard player={player} compact />
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <div className="p-3 text-sm text-text-secondary">
-                Tidak ada pemain yang cocok.
-              </div>
-            )}
-          </div>
-        ) : null}
+      <div className="space-y-2">
+        <span className="block text-xs uppercase tracking-widest text-text-secondary">{label}</span>
+        <div className="relative">
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" />
+          <input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder={placeholder}
+            className="h-12 w-full rounded-panel border border-border bg-background-secondary pl-10 pr-4 text-sm text-text-primary placeholder:text-text-muted focus:border-accent focus:outline-none"
+          />
+          {query.trim().length >= 3 ? (
+            <div className="absolute left-0 right-0 top-14 z-30 max-h-96 overflow-auto rounded-panel border border-border bg-background-secondary p-2 shadow-panel">
+              {loading ? (
+                <div className="p-3 text-sm text-text-secondary">Mencari pemain...</div>
+              ) : results.length > 0 ? (
+                <div className="space-y-2">
+                  {results.map((player) => (
+                    <button
+                      key={player.player_id}
+                      type="button"
+                      onClick={() => selectPlayer(player)}
+                      className="w-full text-left"
+                    >
+                      <PlayerCard player={player} compact />
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-3 text-sm text-text-secondary">
+                  Tidak ada pemain yang cocok.
+                </div>
+              )}
+            </div>
+          ) : null}
+        </div>
       </div>
 
       {selectedPlayer ? (

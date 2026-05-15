@@ -102,12 +102,19 @@ def extract_player_name_for_valuation(question: str) -> str:
     return normalize_space(cleaned)
 
 
-def preview_text(text: str, max_chars: int = 360) -> str:
-    """Short preview for synthesis."""
+def preview_text(text: str, max_chars: int = 900) -> str:
+    """Readable preview for synthesis without cutting mid-word."""
     cleaned = normalize_space(text)
     if len(cleaned) <= max_chars:
         return cleaned
-    return cleaned[: max_chars - 3].rstrip() + "..."
+    preview = cleaned[:max_chars].rstrip()
+    sentence_end = max(preview.rfind("."), preview.rfind("!"), preview.rfind("?"))
+    if sentence_end >= int(max_chars * 0.55):
+        return preview[: sentence_end + 1]
+    word_end = preview.rfind(" ")
+    if word_end >= int(max_chars * 0.55):
+        return preview[:word_end].rstrip() + "..."
+    return preview + "..."
 
 
 def choose_strategy(question: str) -> QueryPlan:
@@ -225,6 +232,33 @@ class AgenticRouter:
                 f"Players statistically similar to {reference} with lower market value than {reference_label}:\n"
                 + "\n".join(lines)
             )
+        if "matches" in first and "market_value_eur" in first:
+            lines = []
+            for row in rows[:6]:
+                value = row.get("market_value_eur")
+                if value is None:
+                    value_label = "nilai tidak tersedia" if language == "id" else "value unavailable"
+                elif language == "id":
+                    value_label = f"EUR {float(value) / 1_000_000:.1f} juta"
+                else:
+                    value_label = f"EUR {float(value) / 1_000_000:.1f} million"
+                if language == "id":
+                    lines.append(
+                        f"- {row.get('player')} ({row.get('club')}, {row.get('league')}) sebagai {row.get('position')}: "
+                        f"{row.get('matches') or 0} laga, {int(row.get('minutes') or 0)} menit, "
+                        f"{row.get('goals') or 0} gol, {row.get('assists') or 0} assist, "
+                        f"{row.get('shots_total') or 0} tembakan, nilai {value_label}."
+                    )
+                else:
+                    lines.append(
+                        f"- {row.get('player')} ({row.get('club')}, {row.get('league')}) as {row.get('position')}: "
+                        f"{row.get('matches') or 0} matches, {int(row.get('minutes') or 0)} minutes, "
+                        f"{row.get('goals') or 0} goals, {row.get('assists') or 0} assists, "
+                        f"{row.get('shots_total') or 0} shots, value {value_label}."
+                    )
+            if language == "id":
+                return "Perbandingan pemain dari Knowledge Graph:\n" + "\n".join(lines)
+            return "Player comparison from the Knowledge Graph:\n" + "\n".join(lines)
         if "goals" in first:
             lines = []
             for index, row in enumerate(rows[:5], start=1):

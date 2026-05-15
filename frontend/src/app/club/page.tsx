@@ -70,7 +70,7 @@ export default function ClubPage() {
     <div className="space-y-6">
       <section className="space-y-4">
         <SectionHeading title="Pilih Klub" />
-        <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_220px]">
+        <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,1fr)_220px]">
           <ClubSelector selectedClub={selectedClub} season={season} onSelect={setSelectedClub} />
           <label className="space-y-2">
             <span className="text-xs uppercase tracking-widest text-text-secondary">Musim</span>

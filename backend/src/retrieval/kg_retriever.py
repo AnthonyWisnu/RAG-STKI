@@ -102,16 +102,49 @@ def infer_league(question: str) -> str | None:
 def infer_similarity_player(question: str) -> str:
     """Extract reference player name for similarity queries."""
     patterns = [
-        r"(?:mirip|serupa|similar to|like)\s+([a-zA-ZÀ-ÿ' .-]+?)(?:\s+(?:akan|tetapi|tapi|namun|dengan|yang|lebih|but|with|market|nilai)|\?|$)",
-        r"(?:statistik|stats)\s+([a-zA-ZÀ-ÿ' .-]+?)(?:\s+(?:akan|tetapi|tapi|namun|dengan|yang|lebih|but|with|market|nilai)|\?|$)",
+        r"(?:mirip|serupa|similar to|like)\s+([a-zA-ZÀ-ÿ' .-]+?)(?:\s+(?:atau|bahkan|akan|tetapi|tapi|namun|dengan|yang|lebih|but|with|market|nilai)|\?|$)",
+        r"(?:statistik|stats)\s+([a-zA-ZÀ-ÿ' .-]+?)(?:\s+(?:atau|bahkan|akan|tetapi|tapi|namun|dengan|yang|lebih|but|with|market|nilai)|\?|$)",
     ]
     for pattern in patterns:
         match = re.search(pattern, question, flags=re.IGNORECASE)
         if match:
             name = re.sub(r"\s+", " ", match.group(1)).strip(" ?.,")
             if name:
+                lowered = name.lower()
+                if "yamal" in lowered and ("lamin" in lowered or "lamine" in lowered):
+                    return "Lamine Yamal"
                 return name
     return question.strip(" ?")
+
+
+def normalize_player_lookup_name(name: str) -> str:
+    """Normalize common player aliases for KG substring lookup."""
+    cleaned = re.sub(r"\s+", " ", name).strip(" ?.,")
+    lowered = cleaned.lower()
+    if "haaland" in lowered:
+        return "Erling Haaland"
+    if "mbappe" in lowered or "mbapp" in lowered:
+        return "Kylian Mbapp"
+    if "yamal" in lowered and ("lamin" in lowered or "lamine" in lowered):
+        return "Lamine Yamal"
+    return cleaned
+
+
+def infer_compare_players(question: str) -> tuple[str, str] | None:
+    """Extract two player names from comparison questions."""
+    pattern = (
+        r"(?:bandingkan|compare)\s+(.+?)\s+"
+        r"(?:dan|and|vs|versus)\s+(.+?)"
+        r"(?:\s+(?:sebagai|as|untuk|pada|di|in)\b|[?.]|$)"
+    )
+    match = re.search(pattern, question, flags=re.IGNORECASE)
+    if not match:
+        return None
+    first = normalize_player_lookup_name(match.group(1))
+    second = normalize_player_lookup_name(match.group(2))
+    if not first or not second:
+        return None
+    return first, second
 
 
 def validate_readonly_cypher(query: str) -> None:
@@ -138,6 +171,42 @@ def build_template_plan(question: str) -> CypherPlan | None:
             parameters={},
             intent="unsupported Champions League",
             fallback_reason=UCL_UNAVAILABLE_MESSAGE,
+        )
+
+    compare_players = infer_compare_players(question)
+    if compare_players is not None:
+        player_a, player_b = compare_players
+        return CypherPlan(
+            query="""
+            MATCH (p:Player)
+            WHERE toLower(p.name) CONTAINS toLower($player_a)
+               OR toLower(p.name) CONTAINS toLower($player_b)
+            MATCH (p)-[:HAS_STATS_IN]->(s:PlayerSeasonStats)-[:DURING]->(se:Season {id: $season})
+            MATCH (s)-[:WITH_CLUB]->(c:Club)
+            MATCH (s)-[:IN_LEAGUE]->(l:League)
+            OPTIONAL MATCH (p)-[:PLAYS_POSITION]->(pos:Position)
+            OPTIONAL MATCH (p)-[:HAS_VALUATION]->(v:Valuation)
+            WITH p, s, se, c, l, pos, v
+            ORDER BY v.valuation_date DESC
+            WITH p, s, se, c, l, pos, collect(v)[0] AS latest_value
+            RETURN p.name AS player,
+                   c.name AS club,
+                   l.name AS league,
+                   se.id AS season,
+                   pos.name AS position,
+                   latest_value.market_value_eur AS market_value_eur,
+                   s.matches_played AS matches,
+                   s.minutes AS minutes,
+                   s.goals AS goals,
+                   s.assists AS assists,
+                   s.shots_total AS shots_total,
+                   s.xg AS xg
+            ORDER BY player ASC
+            LIMIT 6
+            """,
+            parameters={"player_a": player_a, "player_b": player_b, "season": season},
+            intent="player comparison",
+            fallback_reason="template_player_comparison",
         )
 
     if any(token in lowered for token in ("mirip", "serupa", "similar")) and any(
