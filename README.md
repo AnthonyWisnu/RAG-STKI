@@ -17,7 +17,7 @@
 
 <p align="center">
   <strong>Tugas Akademik Sistem Temu Kembali Informasi (STKI)</strong><br>
-  Program Studi Sistem Informasi, Universitas Udayana
+  Program Studi Teknologi Informasi, Universitas Udayana
 </p>
 
 <p align="center">
@@ -884,7 +884,7 @@ Itu sesuai desain. Scope sistem hanya lima liga top Eropa. Pertanyaan UCL akan d
 ## Kontributor
 
 **Anthony**  
-Program Studi Sistem Informasi, Universitas Udayana
+Program Studi Teknologi Informasi, Universitas Udayana
 
 ## Lisensi
 
