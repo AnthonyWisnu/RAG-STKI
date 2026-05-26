@@ -18,8 +18,8 @@ def freshness_badge(state: dict[str, object]) -> str:
     """Build a small freshness badge for frontend display."""
     if not state.get("initial_setup_completed"):
         return "Belum ada data refresh"
-    last_refresh = state.get("last_refresh") or state.get("last_initial_setup")
-    return f"Data siap - refresh {last_refresh}" if last_refresh else "Data siap"
+    last_stats_refresh = state.get("last_stats_refresh") or state.get("last_refresh") or state.get("last_initial_setup")
+    return f"Data statistik siap - refresh {last_stats_refresh}" if last_stats_refresh else "Data siap"
 
 
 @router.get("/health")
@@ -31,7 +31,7 @@ def health_check() -> dict[str, object]:
         state = json.loads(settings.refresh_state_path.read_text(encoding="utf-8"))
     return {
         "status": "ok",
-        "last_refresh": state.get("last_refresh"),
+        "last_refresh": state.get("last_stats_refresh") or state.get("last_refresh"),
         "data_freshness_badge": freshness_badge(state),
         "stats_records": state.get("stats_records"),
         "valuation_records": state.get("valuation_records"),

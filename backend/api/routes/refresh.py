@@ -37,6 +37,8 @@ def read_status() -> dict[str, Any]:
         "error": state.get("manual_refresh_error"),
         "skipped_reason": state.get("manual_refresh_skipped_reason"),
         "last_refresh": state.get("last_refresh"),
+        "last_stats_refresh": state.get("last_stats_refresh"),
+        "last_valuation_refresh": state.get("last_valuation_refresh"),
         "last_manual_refresh": state.get("last_manual_refresh"),
         "stats_records": state.get("stats_records"),
         "valuation_records": state.get("valuation_records"),

@@ -34,7 +34,7 @@ class RefreshStateTracker:
         """Membaca state dari disk jika tersedia."""
         if not self.state_path.exists():
             return {}
-        with self.state_path.open("r", encoding="utf-8") as file:
+        with self.state_path.open("r", encoding="utf-8-sig") as file:
             return json.load(file)
 
     def write(self, state: dict[str, Any]) -> None:
@@ -66,6 +66,8 @@ class RefreshStateTracker:
                 "initial_setup_completed": True,
                 "last_initial_setup": timestamp,
                 "last_refresh": timestamp,
+                "last_stats_refresh": timestamp,
+                "last_valuation_refresh": timestamp,
                 "stats_records": stats_records,
                 "valuation_records": valuation_records,
                 "mapped_players": mapped_players,
@@ -116,8 +118,13 @@ class RefreshStateTracker:
             }
         )
         if skipped_reason is None:
-            state["last_refresh"] = timestamp
             state["last_manual_refresh"] = timestamp
+            base_mode = mode.split(":", 1)[0]
+            if base_mode in {"all", "stats"}:
+                state["last_refresh"] = timestamp
+                state["last_stats_refresh"] = timestamp
+            if base_mode == "valuations":
+                state["last_valuation_refresh"] = timestamp
         if stats_records is not None:
             state["stats_records"] = stats_records
         if valuation_records is not None:

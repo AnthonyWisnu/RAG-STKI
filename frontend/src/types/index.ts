@@ -31,6 +31,8 @@ export type RefreshStatus = {
   error?: string | null;
   skipped_reason?: string | null;
   last_refresh?: string | null;
+  last_stats_refresh?: string | null;
+  last_valuation_refresh?: string | null;
   last_manual_refresh?: string | null;
   stats_records?: number | null;
   valuation_records?: number | null;

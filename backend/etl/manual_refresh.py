@@ -23,9 +23,39 @@ for path in (PROJECT_ROOT, BACKEND_DIR):
 try:
     from etl.neo4j_loader import Neo4jGraphLoader
     from etl.state_tracker import RefreshStateTracker
+    from etl.kaggle_loader import download_transfermarkt_dataset, inspect_dataset_files
+    from etl.fbref_scraper import FBrefFetchRequest, FBrefScraper
+    from etl.initial_setup import (
+        build_graph_records,
+        build_valuation_records,
+        merge_fbref_stats,
+        normalize_fbref_df,
+    )
+    from config.settings import (
+        CURRENT_SEASON,
+        PUBLIC_FBREF_STAT_TYPES,
+        SOCCERDATA_LEAGUE_NAME,
+        get_cached_settings,
+    )
 except ModuleNotFoundError:
     from backend.etl.neo4j_loader import Neo4jGraphLoader
     from backend.etl.state_tracker import RefreshStateTracker
+    from backend.etl.kaggle_loader import download_transfermarkt_dataset, inspect_dataset_files
+    from backend.etl.fbref_scraper import FBrefFetchRequest, FBrefScraper
+    from backend.etl.initial_setup import (
+        build_graph_records,
+        build_valuation_records,
+        merge_fbref_stats,
+        normalize_fbref_df,
+    )
+    from backend.config.settings import (
+        CURRENT_SEASON,
+        PUBLIC_FBREF_STAT_TYPES,
+        SOCCERDATA_LEAGUE_NAME,
+        get_cached_settings,
+    )
+
+import pandas as pd
 
 LOGGER = logging.getLogger(__name__)
 THROTTLE_HOURS = 24
@@ -45,7 +75,7 @@ def should_throttle(state: dict[str, Any], force: bool) -> str | None:
     """Return throttle reason when refresh should be skipped."""
     if force:
         return None
-    last_refresh = parse_timestamp(str(state.get("last_refresh") or ""))
+    last_refresh = parse_timestamp(str(state.get("last_stats_refresh") or state.get("last_refresh") or ""))
     if last_refresh is None:
         return None
     if datetime.now(UTC) - last_refresh < timedelta(hours=THROTTLE_HOURS):
@@ -79,6 +109,113 @@ def read_graph_counts() -> dict[str, int]:
     }
 
 
+def read_mapped_player_ids() -> set[int]:
+    """Read player ids already available in the graph."""
+    loader = Neo4jGraphLoader()
+    try:
+        rows = loader.run_read_query(
+            "MATCH (p:Player) RETURN p.api_id AS player_id",
+            {},
+        )
+    finally:
+        loader.close()
+    return {int(row["player_id"]) for row in rows if row.get("player_id") is not None}
+
+
+def ensure_local_transfermarkt_core_files() -> None:
+    """Ensure local mapper CSVs exist without downloading Kaggle during stats refresh."""
+    settings = get_cached_settings()
+    required = ("players.csv", "clubs.csv")
+    missing = [filename for filename in required if not (settings.raw_data_dir / filename).exists()]
+    if missing:
+        raise FileNotFoundError(
+            "File mapping Transfermarkt lokal belum lengkap: "
+            f"{', '.join(missing)}. Jalankan initial_setup.py dulu."
+        )
+
+
+def fetch_active_fbref_stats(
+    season: str = CURRENT_SEASON,
+    league: str = SOCCERDATA_LEAGUE_NAME,
+) -> pd.DataFrame:
+    """Fetch only the active season from FBref/soccerdata and refresh project cache."""
+    scraper = FBrefScraper()
+    stats_by_type: dict[str, pd.DataFrame] = {}
+    for stat_type in PUBLIC_FBREF_STAT_TYPES:
+        request = FBrefFetchRequest(
+            league=league,
+            season=season,
+            stat_type=stat_type,
+        )
+        dataframe, result = scraper.fetch_player_stats(request, force_refresh=True)
+        LOGGER.info(
+            "FBref refresh selesai: league=%s season=%s stat_type=%s rows=%s cache=%s",
+            league,
+            season,
+            stat_type,
+            result.row_count,
+            result.cache_path,
+        )
+        stats_by_type[stat_type] = normalize_fbref_df(dataframe, stat_type, season)
+    return merge_fbref_stats(stats_by_type)
+
+
+def refresh_valuations(force_download: bool) -> int:
+    """Download latest Transfermarkt CSV and upsert valuations for mapped players."""
+    settings = get_cached_settings()
+    status = inspect_dataset_files(settings.raw_data_dir)
+    if force_download or not status.is_complete:
+        download_transfermarkt_dataset(settings.raw_data_dir, force=force_download)
+
+    valuations_df = pd.read_csv(settings.raw_data_dir / "player_valuations.csv")
+    mapped_player_ids = read_mapped_player_ids()
+    valuation_records = build_valuation_records(valuations_df, mapped_player_ids)
+
+    loader = Neo4jGraphLoader()
+    try:
+        loader.verify_connectivity()
+        loader.setup_constraints()
+        return loader.load_valuations(valuation_records)
+    finally:
+        loader.close()
+
+
+def parse_refresh_mode(mode: str) -> tuple[str, str]:
+    """Split mode into base mode and optional league filter."""
+    if ":" not in mode:
+        return mode, SOCCERDATA_LEAGUE_NAME
+    base_mode, league = mode.split(":", 1)
+    return base_mode, league.strip() or SOCCERDATA_LEAGUE_NAME
+
+
+def refresh_stats(mode: str) -> dict[str, int]:
+    """Refresh active-season FBref stats without resetting graph or downloading Kaggle."""
+    settings = get_cached_settings()
+    base_mode, league = parse_refresh_mode(mode)
+    if base_mode not in {"all", "stats"}:
+        raise ValueError(f"Mode refresh statistik tidak dikenal: {mode}")
+
+    ensure_local_transfermarkt_core_files()
+    players_df = pd.read_csv(settings.raw_data_dir / "players.csv")
+    clubs_df = pd.read_csv(settings.raw_data_dir / "clubs.csv")
+
+    fbref_df = fetch_active_fbref_stats(season=CURRENT_SEASON, league=league)
+    graph_records, mapped_player_ids = build_graph_records(fbref_df, players_df, clubs_df)
+
+    loader = Neo4jGraphLoader()
+    try:
+        loader.verify_connectivity()
+        loader.setup_constraints()
+        loader.load_player_stats(graph_records)
+    finally:
+        loader.close()
+
+    counts = read_graph_counts()
+    counts["refreshed_stats_records"] = len(graph_records)
+    counts["refreshed_mapped_players"] = len(mapped_player_ids)
+    return counts
+
+
 def run_manual_refresh(
     mode: str = "all",
     force: bool = False,
@@ -105,7 +242,19 @@ def run_manual_refresh(
 
     tracker.mark_manual_refresh_started(mode=mode, force=force, dry_run=dry_run)
     try:
-        counts = read_graph_counts()
+        if mode == "valuations":
+            if not dry_run:
+                refresh_valuations(force_download=True)
+            counts = read_graph_counts()
+        else:
+            base_mode, _ = parse_refresh_mode(mode)
+            if base_mode not in {"all", "stats"}:
+                raise ValueError(f"Mode refresh tidak dikenal: {mode}")
+            if dry_run:
+                counts = read_graph_counts()
+            else:
+                counts = refresh_stats(mode=mode)
+
         if dry_run:
             return tracker.mark_manual_refresh_complete(
                 mode=mode,

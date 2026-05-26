@@ -7,6 +7,15 @@ import { getHealth, getRefreshStatus, startRefresh } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import type { HealthResponse, RefreshStatus } from "@/types";
 
+const REFRESH_POLL_INTERVAL_MS = 1500;
+const REFRESH_POLL_ATTEMPTS = 120;
+
+function wait(ms: number) {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, ms);
+  });
+}
+
 function getAgeInDays(lastRefresh: string | null): number | null {
   if (!lastRefresh) {
     return null;
@@ -57,13 +66,27 @@ export function DataFreshnessBadge() {
 
   async function handleRefresh() {
     setRefreshing(true);
+    setOpen(true);
     try {
       const response = await startRefresh();
       setRefreshStatus(response.status);
-      const nextStatus = await getRefreshStatus();
+      let nextStatus = await getRefreshStatus();
       setRefreshStatus(nextStatus);
-      const nextHealth = await getHealth();
-      setHealth(nextHealth);
+
+      for (let attempt = 0; nextStatus.status === "running" && attempt < REFRESH_POLL_ATTEMPTS; attempt += 1) {
+        await wait(REFRESH_POLL_INTERVAL_MS);
+        nextStatus = await getRefreshStatus();
+        setRefreshStatus(nextStatus);
+      }
+
+      setHealth(await getHealth());
+    } catch (caught) {
+      const message = caught instanceof Error ? caught.message : "Refresh data gagal dijalankan.";
+      setRefreshStatus((current) => ({
+        ...(current ?? {}),
+        status: "failed",
+        error: message
+      }));
     } finally {
       setRefreshing(false);
     }
