@@ -17,6 +17,7 @@ pip-wheel-metadata/
 .env.*
 !.env.example
 !.env.local.example
+!.env.production.example
 backend/.env
 frontend/.env.local
 

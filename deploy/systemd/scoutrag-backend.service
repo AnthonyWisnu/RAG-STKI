@@ -1,0 +1,13 @@
+[Unit]
+Description=ScoutRAG FastAPI Backend
+After=network.target
+
+[Service]
+WorkingDirectory=/var/www/scoutrag/backend
+EnvironmentFile=/var/www/scoutrag/backend/.env
+ExecStart=/var/www/scoutrag/backend/.venv/bin/python -m uvicorn main:app --host 127.0.0.1 --port 8000 --workers 1
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
