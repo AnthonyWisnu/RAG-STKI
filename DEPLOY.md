@@ -1,4 +1,4 @@
-# Deploy ScoutRAG ke DigitalOcean Droplet
+﻿# Deploy ScoutRAG ke DigitalOcean Droplet
 
 Panduan ini diasumsikan untuk Droplet Basic kecil, misalnya 1 vCPU, 1 GB RAM, dan Neo4j tetap memakai Neo4j Aura.
 
@@ -14,6 +14,15 @@ External
 - Neo4j Aura
 - OpenAI API
 ```
+
+Domain yang dipakai dalam panduan ini:
+
+```text
+scoutfootball.app
+www.scoutfootball.app
+```
+
+Catatan domain `.app`: browser modern mewajibkan HTTPS untuk domain `.app`. Selesaikan langkah Certbot sebelum memakai aplikasi dari browser.
 
 Mode vector production disarankan:
 
@@ -56,7 +65,28 @@ git clone https://github.com/USERNAME/REPO.git scoutrag
 cd scoutrag
 ```
 
-## 3. Backend
+## 3. DNS Namecheap
+
+Di Namecheap, arahkan domain ke IP Droplet DigitalOcean.
+
+Tambahkan DNS record:
+
+```text
+Type  Host  Value        TTL
+A     @     IP_DROPLET   Automatic
+A     www   IP_DROPLET   Automatic
+```
+
+Jangan pilih GitHub Pages untuk aplikasi utama karena backend FastAPI harus berjalan di VPS.
+
+Tunggu propagasi DNS beberapa menit sampai beberapa jam. Cek dari lokal:
+
+```bash
+nslookup scoutfootball.app
+nslookup www.scoutfootball.app
+```
+
+## 4. Backend
 
 ```bash
 cd /var/www/scoutrag/backend
@@ -76,10 +106,10 @@ NEO4J_URI=neo4j+s://...
 NEO4J_USER=neo4j
 NEO4J_PASSWORD=...
 VECTOR_RETRIEVAL_MODE=lexical
-CORS_ORIGINS=https://your-domain.com
+CORS_ORIGINS=https://scoutfootball.app,https://www.scoutfootball.app
 ```
 
-## 4. Upload Data Lokal
+## 5. Upload Data Lokal
 
 File data tidak ikut Git. Upload minimal:
 
@@ -103,7 +133,7 @@ scp -r backend\cache\fbref root@IP_DROPLET:/var/www/scoutrag/backend/cache/
 scp -r backend\cache\soccerdata root@IP_DROPLET:/var/www/scoutrag/backend/cache/
 ```
 
-## 5. Backend Service
+## 6. Backend Service
 
 ```bash
 cp /var/www/scoutrag/deploy/systemd/scoutrag-backend.service /etc/systemd/system/scoutrag-backend.service
@@ -119,7 +149,7 @@ Test:
 curl http://127.0.0.1:8000/api/health
 ```
 
-## 6. Frontend
+## 7. Frontend
 
 ```bash
 cd /var/www/scoutrag/frontend
@@ -133,7 +163,13 @@ pm2 save
 pm2 startup
 ```
 
-## 7. Nginx
+Isi `.env.production`:
+
+```env
+NEXT_PUBLIC_API_URL=https://scoutfootball.app
+```
+
+## 8. Nginx
 
 ```bash
 cp /var/www/scoutrag/deploy/nginx/scoutrag.conf /etc/nginx/sites-available/scoutrag
@@ -146,17 +182,25 @@ systemctl reload nginx
 Test:
 
 ```bash
-curl http://your-domain.com/api/health
+curl http://scoutfootball.app/api/health
 ```
 
-## 8. HTTPS
+Untuk domain `.app`, test HTTP ini cukup untuk memastikan Nginx menerima request sebelum Certbot. Browser akan lebih aman dipakai setelah HTTPS aktif.
+
+## 9. HTTPS
 
 ```bash
 apt install -y certbot python3-certbot-nginx
-certbot --nginx -d your-domain.com
+certbot --nginx -d scoutfootball.app -d www.scoutfootball.app
 ```
 
-## 9. Update Deploy Setelah Push Baru
+Setelah HTTPS aktif:
+
+```bash
+curl https://scoutfootball.app/api/health
+```
+
+## 10. Update Deploy Setelah Push Baru
 
 ```bash
 cd /var/www/scoutrag
@@ -179,3 +223,4 @@ pm2 restart scoutrag-frontend
 - Jangan jalankan Neo4j lokal di Droplet kecil.
 - Jangan menjalankan `initial_setup.py` penuh di Droplet kecil kecuali benar-benar perlu.
 - Untuk production kecil, gunakan `VECTOR_RETRIEVAL_MODE=lexical`.
+
