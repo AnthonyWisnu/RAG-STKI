@@ -59,6 +59,11 @@ import pandas as pd
 
 LOGGER = logging.getLogger(__name__)
 THROTTLE_HOURS = 24
+SOCCERDATA_SEASON_IDS = {
+    "2023-2024": "2324",
+    "2024-2025": "2425",
+    "2025-2026": "2526",
+}
 
 
 def parse_timestamp(value: str | None) -> datetime | None:
@@ -134,11 +139,36 @@ def ensure_local_transfermarkt_core_files() -> None:
         )
 
 
+def clear_soccerdata_fbref_cache(season: str = CURRENT_SEASON) -> list[Path]:
+    """Remove soccerdata FBref HTML cache so forced refresh fetches fresh pages."""
+    settings = get_cached_settings()
+    season_id = SOCCERDATA_SEASON_IDS.get(season)
+    if season_id is None:
+        raise ValueError(f"Season tidak dikenal untuk cache soccerdata: {season}")
+
+    fbref_cache_dir = settings.soccerdata_dir / "data" / "FBref"
+    if not fbref_cache_dir.exists():
+        return []
+
+    removed: list[Path] = []
+    for stat_type in PUBLIC_FBREF_STAT_TYPES:
+        for path in fbref_cache_dir.glob(f"players_*_{season_id}_{stat_type}.html"):
+            path.unlink()
+            removed.append(path)
+            LOGGER.info("Cache internal soccerdata dihapus: %s", path)
+    return removed
+
+
 def fetch_active_fbref_stats(
     season: str = CURRENT_SEASON,
     league: str = SOCCERDATA_LEAGUE_NAME,
+    clear_internal_cache: bool = False,
 ) -> pd.DataFrame:
     """Fetch only the active season from FBref/soccerdata and refresh project cache."""
+    if clear_internal_cache:
+        removed = clear_soccerdata_fbref_cache(season=season)
+        LOGGER.info("Cache internal soccerdata yang dihapus: %s file", len(removed))
+
     scraper = FBrefScraper()
     stats_by_type: dict[str, pd.DataFrame] = {}
     for stat_type in PUBLIC_FBREF_STAT_TYPES:
@@ -188,7 +218,7 @@ def parse_refresh_mode(mode: str) -> tuple[str, str]:
     return base_mode, league.strip() or SOCCERDATA_LEAGUE_NAME
 
 
-def refresh_stats(mode: str) -> dict[str, int]:
+def refresh_stats(mode: str, force: bool = False) -> dict[str, int]:
     """Refresh active-season FBref stats without resetting graph or downloading Kaggle."""
     settings = get_cached_settings()
     base_mode, league = parse_refresh_mode(mode)
@@ -199,7 +229,11 @@ def refresh_stats(mode: str) -> dict[str, int]:
     players_df = pd.read_csv(settings.raw_data_dir / "players.csv")
     clubs_df = pd.read_csv(settings.raw_data_dir / "clubs.csv")
 
-    fbref_df = fetch_active_fbref_stats(season=CURRENT_SEASON, league=league)
+    fbref_df = fetch_active_fbref_stats(
+        season=CURRENT_SEASON,
+        league=league,
+        clear_internal_cache=force,
+    )
     graph_records, mapped_player_ids = build_graph_records(fbref_df, players_df, clubs_df)
 
     loader = Neo4jGraphLoader()
@@ -253,7 +287,7 @@ def run_manual_refresh(
             if dry_run:
                 counts = read_graph_counts()
             else:
-                counts = refresh_stats(mode=mode)
+                counts = refresh_stats(mode=mode, force=force)
 
         if dry_run:
             return tracker.mark_manual_refresh_complete(
