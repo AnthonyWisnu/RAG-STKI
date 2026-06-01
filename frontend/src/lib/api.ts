@@ -48,7 +48,7 @@ export async function getRefreshStatus(): Promise<RefreshStatus> {
 export async function startRefresh(): Promise<RefreshStartResponse> {
   return request<RefreshStartResponse>("/api/refresh/start", {
     method: "POST",
-    body: JSON.stringify({ mode: "all", force: false, dry_run: false })
+    body: JSON.stringify({ mode: "stats", force: true, dry_run: false })
   });
 }
 

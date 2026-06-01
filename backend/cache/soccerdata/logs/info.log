@@ -1175,3 +1175,179 @@ Loaded PlayerSeasonStats batch: 250 total=2000
 INFO 2026-06-01 23:27:03,593 [neo4j_loader.py:load_player_stats:144]
 Loaded PlayerSeasonStats batch: 49 total=2049
 
+INFO 2026-06-01 23:33:03,072 [_config.py:<module>:92]
+No custom team name replacements found. You can configure these in C:\laragon\www\RAG-STKI\backend\cache\soccerdata\config\teamname_replacements.json.
+
+INFO 2026-06-01 23:33:03,093 [_config.py:<module>:190]
+No custom league dict found. You can configure additional leagues in C:\laragon\www\RAG-STKI\backend\cache\soccerdata\config\league_dict.json.
+
+INFO 2026-06-01 23:33:03,124 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-06-01 23:33:11,012 [warnings.py:_showwarnmsg:110]
+C:\laragon\www\RAG-STKI\backend\.venv\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-06-01 23:34:23,776 [fbref_scraper.py:_read_from_soccerdata:262]
+Fetch FBref selesai: rows=2839 columns=25
+
+INFO 2026-06-01 23:34:24,055 [fbref_scraper.py:_write_cache:274]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\standard_2025-2026.parquet
+
+INFO 2026-06-01 23:34:24,065 [manual_refresh.py:fetch_active_fbref_stats:181]
+FBref refresh selesai: league=Big 5 European Leagues Combined season=2025-2026 stat_type=standard rows=2839 cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\standard_2025-2026.parquet
+
+INFO 2026-06-01 23:34:24,109 [fbref_scraper.py:_configure_soccerdata_environment:240]
+SOCCERDATA_DELAY=6
+
+INFO 2026-06-01 23:34:24,116 [fbref_scraper.py:_configure_soccerdata_environment:241]
+SOCCERDATA_DIR=C:\laragon\www\RAG-STKI\backend\cache\soccerdata
+
+INFO 2026-06-01 23:34:24,125 [fbref_scraper.py:_read_from_soccerdata:244]
+Fetch FBref dimulai: league=Big 5 European Leagues Combined season=2025-2026 stat_type=shooting
+
+INFO 2026-06-01 23:34:24,134 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-06-01 23:34:26,414 [warnings.py:_showwarnmsg:110]
+C:\laragon\www\RAG-STKI\backend\.venv\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-06-01 23:35:08,098 [fbref_scraper.py:_read_from_soccerdata:262]
+Fetch FBref selesai: rows=2839 columns=19
+
+INFO 2026-06-01 23:35:08,293 [fbref_scraper.py:_write_cache:274]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\shooting_2025-2026.parquet
+
+INFO 2026-06-01 23:35:08,301 [manual_refresh.py:fetch_active_fbref_stats:181]
+FBref refresh selesai: league=Big 5 European Leagues Combined season=2025-2026 stat_type=shooting rows=2839 cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\shooting_2025-2026.parquet
+
+INFO 2026-06-01 23:35:08,348 [fbref_scraper.py:_configure_soccerdata_environment:240]
+SOCCERDATA_DELAY=6
+
+INFO 2026-06-01 23:35:08,385 [fbref_scraper.py:_configure_soccerdata_environment:241]
+SOCCERDATA_DIR=C:\laragon\www\RAG-STKI\backend\cache\soccerdata
+
+INFO 2026-06-01 23:35:08,446 [fbref_scraper.py:_read_from_soccerdata:244]
+Fetch FBref dimulai: league=Big 5 European Leagues Combined season=2025-2026 stat_type=misc
+
+INFO 2026-06-01 23:35:08,509 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-06-01 23:35:11,541 [warnings.py:_showwarnmsg:110]
+C:\laragon\www\RAG-STKI\backend\.venv\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-06-01 23:36:06,291 [fbref_scraper.py:_read_from_soccerdata:262]
+Fetch FBref selesai: rows=2839 columns=21
+
+INFO 2026-06-01 23:36:06,380 [fbref_scraper.py:_write_cache:274]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\misc_2025-2026.parquet
+
+INFO 2026-06-01 23:36:06,391 [manual_refresh.py:fetch_active_fbref_stats:181]
+FBref refresh selesai: league=Big 5 European Leagues Combined season=2025-2026 stat_type=misc rows=2839 cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\misc_2025-2026.parquet
+
+INFO 2026-06-01 23:36:06,427 [fbref_scraper.py:_configure_soccerdata_environment:240]
+SOCCERDATA_DELAY=6
+
+INFO 2026-06-01 23:36:06,436 [fbref_scraper.py:_configure_soccerdata_environment:241]
+SOCCERDATA_DIR=C:\laragon\www\RAG-STKI\backend\cache\soccerdata
+
+INFO 2026-06-01 23:36:06,444 [fbref_scraper.py:_read_from_soccerdata:244]
+Fetch FBref dimulai: league=Big 5 European Leagues Combined season=2025-2026 stat_type=keeper
+
+INFO 2026-06-01 23:36:06,458 [_common.py:__init__:250]
+Saving cached data to C:\laragon\www\RAG-STKI\backend\cache\soccerdata\data\FBref
+
+WARNING 2026-06-01 23:36:18,084 [warnings.py:_showwarnmsg:110]
+C:\laragon\www\RAG-STKI\backend\.venv\Lib\site-packages\soccerdata\fbref.py:171: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  pd.concat(dfs)
+
+
+INFO 2026-06-01 23:36:35,304 [fbref_scraper.py:_read_from_soccerdata:262]
+Fetch FBref selesai: rows=194 columns=27
+
+INFO 2026-06-01 23:36:35,331 [fbref_scraper.py:_write_cache:274]
+Cache parquet tersimpan: C:\laragon\www\RAG-STKI\backend\cache\fbref\keeper_2025-2026.parquet
+
+INFO 2026-06-01 23:36:35,334 [manual_refresh.py:fetch_active_fbref_stats:181]
+FBref refresh selesai: league=Big 5 European Leagues Combined season=2025-2026 stat_type=keeper rows=194 cache=C:\laragon\www\RAG-STKI\backend\cache\fbref\keeper_2025-2026.parquet
+
+INFO 2026-06-01 23:36:36,667 [player_id_mapper.py:build_player_candidates:179]
+Kandidat Transfermarkt dibuat: 47637 pemain
+
+INFO 2026-06-01 23:37:27,079 [initial_setup.py:aggregate_duplicate_stats_records:564]
+Agregasi duplicate PlayerSeasonStats: duplicate_rows=32 final_records=2068
+
+INFO 2026-06-01 23:37:27,087 [initial_setup.py:build_graph_records:653]
+Graph records siap: 2068
+
+INFO 2026-06-01 23:37:27,092 [initial_setup.py:build_graph_records:654]
+Unmatched FBref rows: 285
+
+INFO 2026-06-01 23:37:27,098 [initial_setup.py:build_graph_records:655]
+Filtered rows: 454
+
+INFO 2026-06-01 23:37:27,106 [initial_setup.py:build_graph_records:656]
+Mapped unique players: 2036
+
+INFO 2026-06-01 23:37:29,830 [neo4j_loader.py:verify_connectivity:62]
+Koneksi Neo4j berhasil
+
+INFO 2026-06-01 23:37:29,918 [result.py:_handle_warnings:332]
+Received notification from DBMS server: {severity: INFORMATION} {code: Neo.ClientNotification.Schema.IndexOrConstraintAlreadyExists} {category: SCHEMA} {title: `CREATE CONSTRAINT player_api_id IF NOT EXISTS FOR (e:Player) REQUIRE (e.api_id) IS UNIQUE` has no effect.} {description: `CONSTRAINT player_api_id FOR (e:Player) REQUIRE (e.api_id) IS UNIQUE` already exists.} {position: None} for query: 'CREATE CONSTRAINT player_api_id IF NOT EXISTS FOR (n:Player) REQUIRE n.api_id IS UNIQUE'
+
+INFO 2026-06-01 23:37:29,981 [result.py:_handle_warnings:332]
+Received notification from DBMS server: {severity: INFORMATION} {code: Neo.ClientNotification.Schema.IndexOrConstraintAlreadyExists} {category: SCHEMA} {title: `CREATE CONSTRAINT club_api_id IF NOT EXISTS FOR (e:Club) REQUIRE (e.api_id) IS UNIQUE` has no effect.} {description: `CONSTRAINT club_api_id FOR (e:Club) REQUIRE (e.api_id) IS UNIQUE` already exists.} {position: None} for query: 'CREATE CONSTRAINT club_api_id IF NOT EXISTS FOR (n:Club) REQUIRE n.api_id IS UNIQUE'
+
+INFO 2026-06-01 23:37:30,033 [result.py:_handle_warnings:332]
+Received notification from DBMS server: {severity: INFORMATION} {code: Neo.ClientNotification.Schema.IndexOrConstraintAlreadyExists} {category: SCHEMA} {title: `CREATE CONSTRAINT league_id IF NOT EXISTS FOR (e:League) REQUIRE (e.id) IS UNIQUE` has no effect.} {description: `CONSTRAINT league_id FOR (e:League) REQUIRE (e.id) IS UNIQUE` already exists.} {position: None} for query: 'CREATE CONSTRAINT league_id IF NOT EXISTS FOR (n:League) REQUIRE n.id IS UNIQUE'
+
+INFO 2026-06-01 23:37:30,085 [result.py:_handle_warnings:332]
+Received notification from DBMS server: {severity: INFORMATION} {code: Neo.ClientNotification.Schema.IndexOrConstraintAlreadyExists} {category: SCHEMA} {title: `CREATE CONSTRAINT season_id IF NOT EXISTS FOR (e:Season) REQUIRE (e.id) IS UNIQUE` has no effect.} {description: `CONSTRAINT season_id FOR (e:Season) REQUIRE (e.id) IS UNIQUE` already exists.} {position: None} for query: 'CREATE CONSTRAINT season_id IF NOT EXISTS FOR (n:Season) REQUIRE n.id IS UNIQUE'
+
+INFO 2026-06-01 23:37:30,141 [result.py:_handle_warnings:332]
+Received notification from DBMS server: {severity: INFORMATION} {code: Neo.ClientNotification.Schema.IndexOrConstraintAlreadyExists} {category: SCHEMA} {title: `CREATE CONSTRAINT position_id IF NOT EXISTS FOR (e:Position) REQUIRE (e.id) IS UNIQUE` has no effect.} {description: `CONSTRAINT position_id FOR (e:Position) REQUIRE (e.id) IS UNIQUE` already exists.} {position: None} for query: 'CREATE CONSTRAINT position_id IF NOT EXISTS FOR (n:Position) REQUIRE n.id IS UNIQUE'
+
+INFO 2026-06-01 23:37:30,192 [result.py:_handle_warnings:332]
+Received notification from DBMS server: {severity: INFORMATION} {code: Neo.ClientNotification.Schema.IndexOrConstraintAlreadyExists} {category: SCHEMA} {title: `CREATE CONSTRAINT nationality_id IF NOT EXISTS FOR (e:Nationality) REQUIRE (e.id) IS UNIQUE` has no effect.} {description: `CONSTRAINT nationality_id FOR (e:Nationality) REQUIRE (e.id) IS UNIQUE` already exists.} {position: None} for query: 'CREATE CONSTRAINT nationality_id IF NOT EXISTS FOR (n:Nationality) REQUIRE n.id IS UNIQUE'
+
+INFO 2026-06-01 23:37:30,244 [result.py:_handle_warnings:332]
+Received notification from DBMS server: {severity: INFORMATION} {code: Neo.ClientNotification.Schema.IndexOrConstraintAlreadyExists} {category: SCHEMA} {title: `CREATE CONSTRAINT player_stats_id IF NOT EXISTS FOR (e:PlayerSeasonStats) REQUIRE (e.id) IS UNIQUE` has no effect.} {description: `CONSTRAINT player_stats_id FOR (e:PlayerSeasonStats) REQUIRE (e.id) IS UNIQUE` already exists.} {position: None} for query: 'CREATE CONSTRAINT player_stats_id IF NOT EXISTS FOR (n:PlayerSeasonStats) REQUIRE n.id IS UNIQUE'
+
+INFO 2026-06-01 23:37:30,298 [result.py:_handle_warnings:332]
+Received notification from DBMS server: {severity: INFORMATION} {code: Neo.ClientNotification.Schema.IndexOrConstraintAlreadyExists} {category: SCHEMA} {title: `CREATE CONSTRAINT valuation_id IF NOT EXISTS FOR (e:Valuation) REQUIRE (e.id) IS UNIQUE` has no effect.} {description: `CONSTRAINT valuation_id FOR (e:Valuation) REQUIRE (e.id) IS UNIQUE` already exists.} {position: None} for query: 'CREATE CONSTRAINT valuation_id IF NOT EXISTS FOR (n:Valuation) REQUIRE n.id IS UNIQUE'
+
+INFO 2026-06-01 23:37:30,305 [neo4j_loader.py:setup_constraints:79]
+Constraint Neo4j siap
+
+INFO 2026-06-01 23:37:31,501 [neo4j_loader.py:load_player_stats:144]
+Loaded PlayerSeasonStats batch: 250 total=250
+
+INFO 2026-06-01 23:37:32,017 [neo4j_loader.py:load_player_stats:144]
+Loaded PlayerSeasonStats batch: 250 total=500
+
+INFO 2026-06-01 23:37:32,390 [neo4j_loader.py:load_player_stats:144]
+Loaded PlayerSeasonStats batch: 250 total=750
+
+INFO 2026-06-01 23:37:32,786 [neo4j_loader.py:load_player_stats:144]
+Loaded PlayerSeasonStats batch: 250 total=1000
+
+INFO 2026-06-01 23:37:33,142 [neo4j_loader.py:load_player_stats:144]
+Loaded PlayerSeasonStats batch: 250 total=1250
+
+INFO 2026-06-01 23:37:33,515 [neo4j_loader.py:load_player_stats:144]
+Loaded PlayerSeasonStats batch: 250 total=1500
+
+INFO 2026-06-01 23:37:33,908 [neo4j_loader.py:load_player_stats:144]
+Loaded PlayerSeasonStats batch: 250 total=1750
+
+INFO 2026-06-01 23:37:34,293 [neo4j_loader.py:load_player_stats:144]
+Loaded PlayerSeasonStats batch: 250 total=2000
+
+INFO 2026-06-01 23:37:34,775 [neo4j_loader.py:load_player_stats:144]
+Loaded PlayerSeasonStats batch: 68 total=2068
+
