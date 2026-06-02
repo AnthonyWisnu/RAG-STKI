@@ -36,6 +36,8 @@ pnpm-debug.log*
 backend/data/raw/*
 backend/data/processed/*
 backend/data/chroma/*
+backend/data/*.sqlite
+backend/data/*.sqlite-*
 backend/data/refresh_state.json
 backend/cache/fbref/*
 backend/cache/fbref_backup_*/

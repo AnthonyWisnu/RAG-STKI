@@ -1,4 +1,4 @@
-﻿# Deploy ScoutRAG ke DigitalOcean Droplet
+# Deploy ScoutRAG ke DigitalOcean Droplet
 
 Panduan ini diasumsikan untuk Droplet Basic kecil, misalnya 1 vCPU, 1 GB RAM, dan Neo4j tetap memakai Neo4j Aura.
 
@@ -36,7 +36,7 @@ Mode ini memakai `backend/data/processed/documents.jsonl` dan tidak memuat embed
 
 ```bash
 apt update
-apt install -y git nginx curl build-essential python3.11 python3.11-venv python3.11-dev
+apt install -y git nginx curl build-essential apache2-utils python3 python3-venv python3-dev
 ```
 
 Tambahkan swap karena RAM 1 GB sempit:
@@ -90,7 +90,7 @@ nslookup www.scoutfootball.app
 
 ```bash
 cd /var/www/scoutrag/backend
-python3.11 -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements-prod.txt
@@ -106,8 +106,13 @@ NEO4J_URI=neo4j+s://...
 NEO4J_USER=neo4j
 NEO4J_PASSWORD=...
 VECTOR_RETRIEVAL_MODE=lexical
+CHAT_CACHE_ENABLED=true
+CHAT_CACHE_TTL_SECONDS=86400
+CHAT_CACHE_PATH=./data/chat_cache.sqlite
 CORS_ORIGINS=https://scoutfootball.app,https://www.scoutfootball.app
 ```
+
+`CHAT_CACHE_TTL_SECONDS=86400` berarti jawaban pertanyaan yang sama persis akan dicache 24 jam. Cache otomatis tidak dipakai lagi jika `refresh_state.json` berubah karena data statistik diperbarui.
 
 ## 5. Upload Data Lokal
 
@@ -171,6 +176,20 @@ NEXT_PUBLIC_API_URL=https://scoutfootball.app
 
 ## 8. Nginx
 
+Config Nginx project ini memakai Basic Auth supaya aplikasi tidak bisa diakses bebas oleh publik. Buat username dan password dulu:
+
+```bash
+htpasswd -c /etc/nginx/.scoutrag_passwd admin
+```
+
+Masukkan password yang ingin dipakai untuk membuka aplikasi. Untuk menambah user lain tanpa menghapus user lama:
+
+```bash
+htpasswd /etc/nginx/.scoutrag_passwd nama_user
+```
+
+Aktifkan config Nginx:
+
 ```bash
 cp /var/www/scoutrag/deploy/nginx/scoutrag.conf /etc/nginx/sites-available/scoutrag
 nano /etc/nginx/sites-available/scoutrag
@@ -182,7 +201,7 @@ systemctl reload nginx
 Test:
 
 ```bash
-curl http://scoutfootball.app/api/health
+curl -u admin http://scoutfootball.app/api/health
 ```
 
 Untuk domain `.app`, test HTTP ini cukup untuk memastikan Nginx menerima request sebelum Certbot. Browser akan lebih aman dipakai setelah HTTPS aktif.
@@ -197,8 +216,10 @@ certbot --nginx -d scoutfootball.app -d www.scoutfootball.app
 Setelah HTTPS aktif:
 
 ```bash
-curl https://scoutfootball.app/api/health
+curl -u admin https://scoutfootball.app/api/health
 ```
+
+Saat membuka `https://scoutfootball.app/chat` dari browser, browser akan menampilkan popup username/password. Setelah login, frontend dan API tetap berjalan normal karena request berada di domain yang sama.
 
 ## 10. Update Deploy Setelah Push Baru
 
@@ -215,6 +236,54 @@ cd ../frontend
 npm install
 npm run build
 pm2 restart scoutrag-frontend
+```
+
+## 11. Mengganti OpenAI API Key Production
+
+Gunakan key berbeda untuk lokal dan VPS agar pemakaian production bisa dipantau terpisah.
+
+1. Buat API key baru di dashboard OpenAI.
+2. Masuk ke VPS.
+3. Edit file environment backend production:
+
+```bash
+cd /var/www/scoutrag/backend
+nano .env
+```
+
+4. Ganti hanya baris berikut:
+
+```env
+OPENAI_API_KEY=sk-key-production-baru
+```
+
+5. Restart backend:
+
+```bash
+systemctl restart scoutrag-backend
+systemctl status scoutrag-backend
+```
+
+6. Test dari VPS:
+
+```bash
+curl -u admin https://scoutfootball.app/api/health
+curl -u admin -X POST https://scoutfootball.app/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{"question":"Siapa top scorer La Liga musim ini?"}'
+```
+
+7. Jika sudah aman, revoke API key lama dari dashboard OpenAI.
+
+Catatan: jangan pernah commit `.env`. File yang dicommit hanya `.env.example` atau `.env.production.example`.
+
+## 12. Membersihkan Chat Cache
+
+Normalnya cache tidak perlu dihapus. Cache otomatis invalid saat data refresh berubah. Kalau ingin mengosongkan cache manual:
+
+```bash
+rm -f /var/www/scoutrag/backend/data/chat_cache.sqlite*
+systemctl restart scoutrag-backend
 ```
 
 ## Catatan

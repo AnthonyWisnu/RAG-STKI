@@ -11,8 +11,10 @@ except ModuleNotFoundError:
 
 try:
     from src.retrieval.agentic_router import AgenticRouter
+    from src.cache.chat_cache import ChatCache
 except ModuleNotFoundError:
     from backend.src.retrieval.agentic_router import AgenticRouter
+    from backend.src.cache.chat_cache import ChatCache
 
 router = APIRouter(prefix="/api", tags=["chat"])
 
@@ -20,12 +22,21 @@ router = APIRouter(prefix="/api", tags=["chat"])
 @router.post("/chat", response_model=ChatResponse)
 def chat(request: ChatRequest) -> ChatResponse:
     """Answer a user question through the agentic retrieval router."""
+    cache = ChatCache()
+    cached_response = cache.get(
+        request.question,
+        use_llm_planner=request.use_llm_planner,
+        use_llm_valuation=request.use_llm_valuation,
+    )
+    if cached_response is not None:
+        return ChatResponse(**cached_response)
+
     result = AgenticRouter().answer(
         request.question,
         use_llm_planner=request.use_llm_planner,
         use_llm_valuation=request.use_llm_valuation,
     )
-    return ChatResponse(
+    response = ChatResponse(
         answer=result.answer,
         strategy_used=result.strategy_used,
         language=result.language,
@@ -39,3 +50,10 @@ def chat(request: ChatRequest) -> ChatResponse:
         },
         fallback_signal=result.fallback_signal,
     )
+    cache.set(
+        request.question,
+        response.model_dump(mode="json"),
+        use_llm_planner=request.use_llm_planner,
+        use_llm_valuation=request.use_llm_valuation,
+    )
+    return response

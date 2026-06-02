@@ -96,6 +96,11 @@ def _get_int_env(name: str, default: int) -> int:
         return default
 
 
+def _get_bool_env(name: str, default: bool) -> bool:
+    raw_value = _get_env(name, "true" if default else "false").lower()
+    return raw_value in {"1", "true", "yes", "on"}
+
+
 def _split_csv(value: str) -> tuple[str, ...]:
     items = [item.strip() for item in value.split(",")]
     return tuple(item for item in items if item)
@@ -120,6 +125,7 @@ class Settings:
     fbref_cache_dir: Path
     wiki_cache_dir: Path
     chroma_persist_dir: Path
+    chat_cache_path: Path
     soccerdata_dir: Path
     logs_dir: Path
     openai_api_key: str
@@ -133,6 +139,8 @@ class Settings:
     embedding_model_name: str
     chroma_collection_name: str
     document_batch_size: int
+    chat_cache_enabled: bool
+    chat_cache_ttl_seconds: int
     llm_model_name: str
     openai_timeout_seconds: int
     log_level: str
@@ -160,6 +168,9 @@ def get_settings() -> Settings:
         chroma_persist_dir=_resolve_backend_path(
             _get_env("CHROMA_PERSIST_DIR", "data/chroma")
         ),
+        chat_cache_path=_resolve_backend_path(
+            _get_env("CHAT_CACHE_PATH", "data/chat_cache.sqlite")
+        ),
         soccerdata_dir=_resolve_backend_path(
             _get_env("SOCCERDATA_DIR", "cache/soccerdata")
         ),
@@ -184,6 +195,11 @@ def get_settings() -> Settings:
         document_batch_size=max(
             _get_int_env("DOCUMENT_BATCH_SIZE", DEFAULT_DOCUMENT_BATCH_SIZE),
             1,
+        ),
+        chat_cache_enabled=_get_bool_env("CHAT_CACHE_ENABLED", True),
+        chat_cache_ttl_seconds=max(
+            _get_int_env("CHAT_CACHE_TTL_SECONDS", 86_400),
+            60,
         ),
         llm_model_name=_get_env("LLM_MODEL_NAME", DEFAULT_LLM_MODEL_NAME),
         openai_timeout_seconds=max(

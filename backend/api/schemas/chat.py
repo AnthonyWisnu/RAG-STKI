@@ -25,3 +25,4 @@ class ChatResponse(BaseModel):
     citations: list[dict[str, Any]]
     context: dict[str, Any]
     fallback_signal: str | None = None
+    cached: bool = False

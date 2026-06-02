@@ -64,6 +64,7 @@ export type ChatResponse = {
     debug?: Record<string, unknown>;
   };
   fallback_signal?: string | null;
+  cached?: boolean;
 };
 
 export type PlayerSummary = {
