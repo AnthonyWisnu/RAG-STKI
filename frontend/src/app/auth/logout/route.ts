@@ -2,6 +2,15 @@ import { NextResponse } from "next/server";
 
 import { authCookieName } from "@/lib/auth";
 
+function publicUrl(request: Request, pathname: string): URL {
+  const headers = request.headers;
+  const proto =
+    headers.get("x-forwarded-proto") ??
+    new URL(request.url).protocol.replace(":", "");
+  const host = headers.get("x-forwarded-host") ?? headers.get("host") ?? new URL(request.url).host;
+  return new URL(pathname, `${proto}://${host}`);
+}
+
 function clearCookie(response: NextResponse) {
   response.cookies.set(authCookieName(), "", {
     httpOnly: true,
@@ -14,7 +23,7 @@ function clearCookie(response: NextResponse) {
 }
 
 function logoutRedirect(request: Request) {
-  const response = NextResponse.redirect(new URL("/login", request.url));
+  const response = NextResponse.redirect(publicUrl(request, "/login"));
   return clearCookie(response);
 }
 
