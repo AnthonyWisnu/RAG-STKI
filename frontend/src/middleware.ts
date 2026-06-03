@@ -15,6 +15,15 @@ function isPublicPath(pathname: string): boolean {
   );
 }
 
+function publicUrl(request: NextRequest, pathname: string): URL {
+  const proto = request.headers.get("x-forwarded-proto") ?? request.nextUrl.protocol.replace(":", "");
+  const host =
+    request.headers.get("x-forwarded-host") ??
+    request.headers.get("host") ??
+    request.nextUrl.host;
+  return new URL(pathname, `${proto}://${host}`);
+}
+
 export async function middleware(request: NextRequest) {
   if (!authEnabled()) {
     return NextResponse.next();
@@ -25,7 +34,7 @@ export async function middleware(request: NextRequest) {
   const session = await verifySessionToken(token);
 
   if (pathname === "/login" && session) {
-    return NextResponse.redirect(new URL("/chat", request.url));
+    return NextResponse.redirect(publicUrl(request, "/chat"));
   }
 
   if (isPublicPath(pathname)) {
@@ -33,7 +42,7 @@ export async function middleware(request: NextRequest) {
   }
 
   if (!session) {
-    const loginUrl = new URL("/login", request.url);
+    const loginUrl = publicUrl(request, "/login");
     loginUrl.searchParams.set("next", `${pathname}${search}`);
     return NextResponse.redirect(loginUrl);
   }
@@ -44,4 +53,3 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: ["/((?!_next/static|_next/image).*)"],
 };
-

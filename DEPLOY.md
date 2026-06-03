@@ -226,6 +226,8 @@ Expected result:
 
 - `/chat` tanpa cookie login redirect ke `/login`.
 - `/api/health` tanpa cookie login return `401`.
+- Jika `/chat` redirect ke `localhost:3000`, pastikan Nginx config terbaru sudah punya `proxy_set_header X-Forwarded-Host $host;`, lalu rebuild frontend dan reload Nginx.
+- Jika `/api/health` return `500`, cek `APP_AUTH_SECRET` di backend `.env`; auth aktif wajib memakai secret minimal 32 karakter dan service backend harus direstart.
 
 Untuk test API dengan cookie login dari terminal:
 
