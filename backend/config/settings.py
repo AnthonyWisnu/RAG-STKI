@@ -141,6 +141,11 @@ class Settings:
     document_batch_size: int
     chat_cache_enabled: bool
     chat_cache_ttl_seconds: int
+    app_auth_enabled: bool
+    app_auth_username: str
+    app_auth_password: str
+    app_auth_secret: str
+    app_auth_session_ttl_seconds: int
     llm_model_name: str
     openai_timeout_seconds: int
     log_level: str
@@ -200,6 +205,14 @@ def get_settings() -> Settings:
         chat_cache_ttl_seconds=max(
             _get_int_env("CHAT_CACHE_TTL_SECONDS", 86_400),
             60,
+        ),
+        app_auth_enabled=_get_bool_env("APP_AUTH_ENABLED", False),
+        app_auth_username=_get_env("APP_AUTH_USERNAME", "admin"),
+        app_auth_password=_get_env("APP_AUTH_PASSWORD"),
+        app_auth_secret=_get_env("APP_AUTH_SECRET"),
+        app_auth_session_ttl_seconds=max(
+            _get_int_env("APP_AUTH_SESSION_TTL_SECONDS", 604_800),
+            300,
         ),
         llm_model_name=_get_env("LLM_MODEL_NAME", DEFAULT_LLM_MODEL_NAME),
         openai_timeout_seconds=max(

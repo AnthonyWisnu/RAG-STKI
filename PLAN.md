@@ -458,6 +458,141 @@ Catatan kerja:
 
 ---
 
+## Rencana Tambahan: Migrasi Basic Auth Nginx ke Login Aplikasi
+
+Tujuan: mengganti popup login browser dari Nginx Basic Auth menjadi halaman login sederhana di aplikasi ScoutRAG. Login tetap sederhana, tanpa database user, memakai satu username/password dari environment dan signed HttpOnly cookie.
+
+**Dependency Urutan:**
+- Task 1 harus selesai sebelum frontend dan backend auth membaca konfigurasi.
+- Task 2 dan Task 3 harus selesai sebelum middleware frontend aktif.
+- Task 4 harus selesai sebelum Basic Auth Nginx dilepas, supaya API tidak terbuka publik.
+- Task 5 hanya boleh dilakukan setelah login frontend dan backend guard lolos smoke test lokal.
+- Task 6 harus selesai sebelum deploy ke VPS.
+
+### Auth Task 1: Konfigurasi Environment Auth
+
+**Tasks:**
+- [x] Tambahkan setting `APP_AUTH_ENABLED`, `APP_AUTH_USERNAME`, `APP_AUTH_PASSWORD`, dan `APP_AUTH_SECRET` di backend settings (30 menit)
+- [x] Tambahkan env example lokal dan production untuk backend (20 menit)
+- [x] Tambahkan env example production untuk frontend tanpa prefix `NEXT_PUBLIC_` untuk secret auth (20 menit)
+- [x] Dokumentasikan aturan secret minimal: panjang, acak, dan beda antara local dan production (20 menit)
+
+**Files created/modified:**
+- `backend/config/settings.py`
+- `backend/.env.example`
+- `backend/.env.production.example`
+- `frontend/.env.production.example`
+- `DEPLOY.md`
+
+**Checkpoint:** Ya - konfirmasi nama env dan strategi 1 user sebelum implementasi login.
+
+**Risk:**
+- Secret frontend dan backend tidak sama sehingga cookie tidak valid di backend. Mitigation: satu nama `APP_AUTH_SECRET` dipakai konsisten di kedua environment.
+
+### Auth Task 2: Helper Signed Cookie dan Auth Route Frontend
+
+**Tasks:**
+- [x] Buat helper signing/verifikasi cookie dengan HMAC SHA-256 memakai `APP_AUTH_SECRET` (60 menit)
+- [x] Implementasi route `POST /auth/login` untuk validasi username/password dari env (60 menit)
+- [x] Implementasi route `POST/GET /auth/logout` untuk menghapus cookie (30 menit)
+- [x] Set cookie dengan `HttpOnly`, `Secure` di production, `SameSite=Lax`, path `/`, dan expiry jelas (45 menit)
+- [x] Unit/smoke test helper token: valid, expired, secret salah, dan payload rusak (45 menit)
+
+**Files created/modified:**
+- `frontend/src/lib/auth.ts`
+- `frontend/src/app/auth/login/route.ts`
+- `frontend/src/app/auth/logout/route.ts`
+
+**Checkpoint:** Tidak - lanjut ke halaman login jika helper token lolos smoke test.
+
+**Risk:**
+- Cookie bisa dipalsukan jika signing lemah. Mitigation: HMAC dengan secret kuat, expiry, dan constant-time compare.
+
+### Auth Task 3: Halaman Login dan Middleware Frontend
+
+**Tasks:**
+- [x] Buat halaman `/login` dengan desain sesuai ScoutRAG, form username/password, loading state, dan error state (120 menit)
+- [x] Implementasi redirect setelah login ke halaman asal atau `/chat` (45 menit)
+- [x] Implementasi `middleware.ts` untuk proteksi semua halaman aplikasi kecuali `/login`, `/auth/*`, `/_next/*`, dan assets statis (75 menit)
+- [x] Tambahkan tombol logout di sidebar atau header (45 menit)
+- [x] Smoke test browser: akses `/chat` tanpa cookie, login sukses, logout, lalu akses ulang (60 menit)
+
+**Files created/modified:**
+- `frontend/src/app/login/page.tsx`
+- `frontend/src/middleware.ts`
+- `frontend/src/components/layout/Sidebar.tsx`
+- `frontend/src/components/layout/Header.tsx` bila tombol logout lebih cocok di header
+- `frontend/src/app/globals.css` bila perlu minor styling
+
+**Checkpoint:** Ya - konfirmasi UX login sebelum backend API guard dan deploy.
+
+**Risk:**
+- Middleware memblokir asset Next.js sehingga halaman login blank. Mitigation: matcher mengecualikan `/_next`, favicon, image, dan static files.
+- Root layout masih menampilkan Sidebar/Header di halaman login. Mitigation: bila perlu buat auth-aware layout atau sembunyikan shell saat path `/login`.
+
+### Auth Task 4: Backend API Auth Guard
+
+**Tasks:**
+- [x] Buat middleware FastAPI untuk membaca cookie session dari request (60 menit)
+- [x] Verifikasi signature dan expiry memakai secret yang sama dengan frontend (75 menit)
+- [x] Proteksi semua `/api/*` kecuali endpoint yang disepakati publik, jika ada (45 menit)
+- [x] Pastikan response unauthorized berupa JSON `401` yang jelas (30 menit)
+- [x] Smoke test curl: tanpa cookie `401`, cookie valid `200`, cookie invalid `401` (60 menit)
+
+**Files created/modified:**
+- `backend/api/middleware/auth.py`
+- `backend/api/middleware/__init__.py`
+- `backend/main.py`
+- `backend/config/settings.py`
+
+**Checkpoint:** Ya - wajib konfirmasi API tidak bisa ditembak langsung sebelum Basic Auth Nginx dilepas.
+
+**Risk:**
+- API refresh data ikut terbuka jika guard salah. Mitigation: guard diterapkan global untuk prefix `/api` dan refresh endpoint ikut diuji.
+
+### Auth Task 5: Lepas Basic Auth Nginx dan Sesuaikan Deploy
+
+**Tasks:**
+- [x] Hapus `auth_basic` dan `auth_basic_user_file` dari config Nginx repo (30 menit)
+- [x] Pastikan `/.well-known/acme-challenge/` tetap tidak terganggu untuk Certbot (20 menit)
+- [x] Update DEPLOY.md: hapus instruksi `htpasswd` sebagai langkah wajib dan ganti dengan setup env app login (45 menit)
+- [x] Tambahkan instruksi rollback cepat ke Basic Auth jika login aplikasi gagal di VPS (30 menit)
+- [ ] Test `nginx -t` setelah config baru diterapkan di VPS (20 menit)
+
+**Files created/modified:**
+- `deploy/nginx/scoutrag.conf`
+- `DEPLOY.md`
+
+**Checkpoint:** Ya - konfirmasi sebelum reload Nginx production, karena setelah Basic Auth dilepas, proteksi utama pindah ke aplikasi.
+
+**Risk:**
+- Jika backend auth belum aktif, API bisa terbuka. Mitigation: jangan reload Nginx production sebelum Task 4 smoke test berhasil.
+
+### Auth Task 6: Deploy dan Verifikasi Production
+
+**Tasks:**
+- [ ] Generate `APP_AUTH_SECRET` production yang kuat dan simpan hanya di `.env` VPS (15 menit)
+- [ ] Update `/var/www/scoutrag/backend/.env` dan `/var/www/scoutrag/frontend/.env.production` di VPS (30 menit)
+- [ ] Pull kode terbaru, rebuild frontend, restart PM2, restart backend systemd (45 menit)
+- [ ] Apply Nginx config baru dan reload Nginx (20 menit)
+- [ ] Test production tanpa login: `/chat` redirect ke `/login`, `/api/health` return `401` (30 menit)
+- [ ] Test production dengan login: dashboard terbuka, `/api/chat`, `/api/players/search`, `/api/refresh/status` berjalan (45 menit)
+- [ ] Test logout: cookie hilang dan akses dashboard kembali redirect ke `/login` (20 menit)
+
+**Files created/modified:**
+- Tidak ada file repo wajib; perubahan production ada di:
+- `/var/www/scoutrag/backend/.env`
+- `/var/www/scoutrag/frontend/.env.production`
+- `/etc/nginx/sites-available/scoutrag`
+
+**Checkpoint:** Ya - final confirmation bahwa login aplikasi menggantikan Basic Auth dan semua fitur utama tetap berjalan.
+
+**Risk:**
+- Cookie secure tidak terkirim bila HTTPS belum benar. Mitigation: production hanya pakai HTTPS dan test via `https://scoutfootball.app`.
+- Environment mismatch antara PM2 dan build frontend. Mitigation: edit `.env.production`, rebuild, lalu `pm2 restart scoutrag-frontend`.
+
+---
+
 ## Checkpoint Wajib
 
 - Setelah Hari 1: struktur repo dan dependency disetujui.
@@ -475,6 +610,8 @@ Catatan kerja:
   - `/club`
 - Setelah Hari 13: hasil evaluasi RAGAS atau fallback evaluation disetujui.
 - Setelah Hari 14: final QA dan README disetujui.
+- Sebelum migrasi auth production: login frontend dan backend API guard wajib lolos smoke test lokal.
+- Setelah migrasi auth production: `/chat` wajib redirect ke `/login` tanpa cookie dan `/api/health` wajib `401` tanpa cookie.
 
 ---
 
@@ -490,3 +627,5 @@ Catatan kerja:
 - **Frontend menyimpang dari design aesthetic:** tokens lebih dulu, shared components lebih dulu, screenshot review per halaman.
 - **Mobile table dan filter usability:** horizontal scroll, bottom sheet filter, dan QA breakpoint.
 - **Waktu 2 minggu padat:** checkpoint membekukan schema dan visual sebelum lanjut agar tidak terjadi rework besar.
+- **Migrasi auth membuka API tanpa sengaja:** backend auth guard harus aktif dan diuji sebelum Basic Auth Nginx dilepas.
+- **Cookie login invalid antara frontend dan backend:** `APP_AUTH_SECRET` harus sama di frontend production dan backend production.

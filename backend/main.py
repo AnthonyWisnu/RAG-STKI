@@ -16,6 +16,7 @@ try:
         refresh_router,
         top_router,
     )
+    from api.middleware import AppAuthMiddleware
     from config.settings import get_cached_settings
 except ModuleNotFoundError:
     from backend.api.routes import (
@@ -28,6 +29,7 @@ except ModuleNotFoundError:
         refresh_router,
         top_router,
     )
+    from backend.api.middleware import AppAuthMiddleware
     from backend.config.settings import get_cached_settings
 
 
@@ -48,6 +50,7 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+    app.add_middleware(AppAuthMiddleware, settings=app_settings)
 
     app.include_router(health_router)
     app.include_router(chat_router)

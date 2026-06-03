@@ -36,7 +36,7 @@ Mode ini memakai `backend/data/processed/documents.jsonl` dan tidak memuat embed
 
 ```bash
 apt update
-apt install -y git nginx curl build-essential apache2-utils python3 python3-venv python3-dev
+apt install -y git nginx curl build-essential python3 python3-venv python3-dev
 ```
 
 Tambahkan swap karena RAM 1 GB sempit:
@@ -109,10 +109,17 @@ VECTOR_RETRIEVAL_MODE=lexical
 CHAT_CACHE_ENABLED=true
 CHAT_CACHE_TTL_SECONDS=86400
 CHAT_CACHE_PATH=./data/chat_cache.sqlite
+APP_AUTH_ENABLED=true
+APP_AUTH_USERNAME=admin
+APP_AUTH_PASSWORD=...
+APP_AUTH_SECRET=...
+APP_AUTH_SESSION_TTL_SECONDS=604800
 CORS_ORIGINS=https://scoutfootball.app,https://www.scoutfootball.app
 ```
 
 `CHAT_CACHE_TTL_SECONDS=86400` berarti jawaban pertanyaan yang sama persis akan dicache 24 jam. Cache otomatis tidak dipakai lagi jika `refresh_state.json` berubah karena data statistik diperbarui.
+
+`APP_AUTH_SECRET` wajib sama antara backend `.env` dan frontend `.env.production`. Gunakan secret acak minimal 32 karakter, misalnya hasil `openssl rand -hex 32`. Jangan pakai secret yang sama dengan local development.
 
 ## 5. Upload Data Lokal
 
@@ -172,28 +179,23 @@ Isi `.env.production`:
 
 ```env
 NEXT_PUBLIC_API_URL=https://scoutfootball.app
+APP_AUTH_ENABLED=true
+APP_AUTH_USERNAME=admin
+APP_AUTH_PASSWORD=...
+APP_AUTH_SECRET=...
+APP_AUTH_SESSION_TTL_SECONDS=604800
 ```
+
+Nilai `APP_AUTH_USERNAME`, `APP_AUTH_PASSWORD`, dan `APP_AUTH_SECRET` harus sama dengan backend `.env`. Setelah mengubah `.env.production`, jalankan ulang `npm run build` karena environment frontend production dibaca saat build.
 
 ## 8. Nginx
 
-Config Nginx project ini memakai Basic Auth supaya aplikasi tidak bisa diakses bebas oleh publik. Buat username dan password dulu:
-
-```bash
-htpasswd -c /etc/nginx/.scoutrag_passwd admin
-```
-
-Masukkan password yang ingin dipakai untuk membuka aplikasi. Untuk menambah user lain tanpa menghapus user lama:
-
-```bash
-htpasswd /etc/nginx/.scoutrag_passwd nama_user
-```
-
-Aktifkan config Nginx:
+Config Nginx hanya menjadi reverse proxy. Login ditangani oleh aplikasi melalui `/login`, bukan Basic Auth Nginx.
 
 ```bash
 cp /var/www/scoutrag/deploy/nginx/scoutrag.conf /etc/nginx/sites-available/scoutrag
 nano /etc/nginx/sites-available/scoutrag
-ln -s /etc/nginx/sites-available/scoutrag /etc/nginx/sites-enabled/scoutrag
+ln -sf /etc/nginx/sites-available/scoutrag /etc/nginx/sites-enabled/scoutrag
 nginx -t
 systemctl reload nginx
 ```
@@ -201,7 +203,7 @@ systemctl reload nginx
 Test:
 
 ```bash
-curl -u admin http://scoutfootball.app/api/health
+curl -I http://scoutfootball.app/chat
 ```
 
 Untuk domain `.app`, test HTTP ini cukup untuk memastikan Nginx menerima request sebelum Certbot. Browser akan lebih aman dipakai setelah HTTPS aktif.
@@ -216,10 +218,26 @@ certbot --nginx -d scoutfootball.app -d www.scoutfootball.app
 Setelah HTTPS aktif:
 
 ```bash
-curl -u admin https://scoutfootball.app/api/health
+curl -I https://scoutfootball.app/chat
+curl https://scoutfootball.app/api/health
 ```
 
-Saat membuka `https://scoutfootball.app/chat` dari browser, browser akan menampilkan popup username/password. Setelah login, frontend dan API tetap berjalan normal karena request berada di domain yang sama.
+Expected result:
+
+- `/chat` tanpa cookie login redirect ke `/login`.
+- `/api/health` tanpa cookie login return `401`.
+
+Untuk test API dengan cookie login dari terminal:
+
+```bash
+curl -c /tmp/scoutrag-cookie.txt -X POST https://scoutfootball.app/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"PASSWORD_PRODUCTION"}'
+
+curl -b /tmp/scoutrag-cookie.txt https://scoutfootball.app/api/health
+```
+
+Saat membuka `https://scoutfootball.app/chat` dari browser, aplikasi akan menampilkan halaman login ScoutRAG. Setelah login, frontend dan API berjalan normal karena request berada di domain yang sama.
 
 ## 10. Update Deploy Setelah Push Baru
 
@@ -234,6 +252,7 @@ systemctl restart scoutrag-backend
 
 cd ../frontend
 npm install
+nano .env.production
 npm run build
 pm2 restart scoutrag-frontend
 ```
@@ -267,8 +286,12 @@ systemctl status scoutrag-backend
 6. Test dari VPS:
 
 ```bash
-curl -u admin https://scoutfootball.app/api/health
-curl -u admin -X POST https://scoutfootball.app/api/chat \
+curl -c /tmp/scoutrag-cookie.txt -X POST https://scoutfootball.app/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"PASSWORD_PRODUCTION"}'
+
+curl -b /tmp/scoutrag-cookie.txt https://scoutfootball.app/api/health
+curl -b /tmp/scoutrag-cookie.txt -X POST https://scoutfootball.app/api/chat \
   -H "Content-Type: application/json" \
   -d '{"question":"Siapa top scorer La Liga musim ini?"}'
 ```
@@ -284,6 +307,35 @@ Normalnya cache tidak perlu dihapus. Cache otomatis invalid saat data refresh be
 ```bash
 rm -f /var/www/scoutrag/backend/data/chat_cache.sqlite*
 systemctl restart scoutrag-backend
+```
+
+## 13. Rollback Cepat ke Basic Auth Nginx
+
+Gunakan rollback ini hanya jika login aplikasi bermasalah di production dan kamu perlu mengunci akses sementara.
+
+```bash
+apt install -y apache2-utils
+htpasswd -c /etc/nginx/.scoutrag_passwd admin
+nano /etc/nginx/sites-available/scoutrag
+```
+
+Tambahkan di dalam server block utama:
+
+```nginx
+auth_basic "ScoutRAG";
+auth_basic_user_file /etc/nginx/.scoutrag_passwd;
+
+location /.well-known/acme-challenge/ {
+    auth_basic off;
+    root /var/www/html;
+}
+```
+
+Lalu:
+
+```bash
+nginx -t
+systemctl reload nginx
 ```
 
 ## Catatan

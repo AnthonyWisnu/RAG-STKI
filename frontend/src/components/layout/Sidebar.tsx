@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   MessageSquare,
+  LogOut,
   Search,
   Shield,
   Sparkles,
@@ -60,6 +61,13 @@ export function Sidebar() {
         </nav>
 
         <div className="border-t border-border p-3">
+          <a
+            href="/auth/logout"
+            className="mb-3 flex items-center gap-3 rounded-panel border border-border px-3 py-2 text-sm text-text-secondary transition-colors hover:bg-background-tertiary hover:text-text-primary"
+          >
+            <LogOut className="h-4 w-4" aria-hidden="true" />
+            <span>Logout</span>
+          </a>
           <DataFreshnessBadge />
         </div>
       </aside>

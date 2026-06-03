@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 import "@/app/globals.css";
-import { Header } from "@/components/layout/Header";
-import { Sidebar } from "@/components/layout/Sidebar";
+import { AppShell } from "@/components/layout/AppShell";
 
 export const metadata: Metadata = {
   title: "ScoutRAG",
@@ -18,13 +17,7 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body>
-        <Sidebar />
-        <div className="min-h-screen pb-20 md:pb-0 lg:pl-64">
-          <Header />
-          <main className="mx-auto min-h-[calc(100vh-56px)] w-full max-w-7xl px-4 py-5 lg:px-8">
-            {children}
-          </main>
-        </div>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );
