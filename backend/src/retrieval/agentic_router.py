@@ -21,7 +21,7 @@ try:
     from config.settings import NO_DATA_MESSAGE, UCL_UNAVAILABLE_MESSAGE
     from src.llm.openai_client import OpenAIClient
     from src.llm.prompt_loader import PromptLoader
-    from src.retrieval.kg_retriever import KGRetriever
+    from src.retrieval.kg_retriever import KGRetriever, infer_player_name
     from src.retrieval.vector_retriever import VectorRetriever
     from src.utils.language_detect import detect_language
     from src.valuation.valuation_reasoner import ValuationReasoner
@@ -29,7 +29,7 @@ except ModuleNotFoundError:
     from backend.config.settings import NO_DATA_MESSAGE, UCL_UNAVAILABLE_MESSAGE
     from backend.src.llm.openai_client import OpenAIClient
     from backend.src.llm.prompt_loader import PromptLoader
-    from backend.src.retrieval.kg_retriever import KGRetriever
+    from backend.src.retrieval.kg_retriever import KGRetriever, infer_player_name
     from backend.src.retrieval.vector_retriever import VectorRetriever
     from backend.src.utils.language_detect import detect_language
     from backend.src.valuation.valuation_reasoner import ValuationReasoner
@@ -37,6 +37,42 @@ except ModuleNotFoundError:
 LOGGER = logging.getLogger(__name__)
 
 Strategy = Literal["kg_only", "vector_only", "hybrid", "valuation_reasoning"]
+
+LOW_INFORMATION_TERMS = {
+    "tes",
+    "test",
+    "halo",
+    "hello",
+    "hi",
+    "hai",
+    "coba",
+    "cek",
+}
+INDONESIAN_LOW_INFORMATION_TERMS = {"tes", "halo", "hai", "coba", "cek"}
+
+
+def low_information_message(language: str) -> str:
+    """Return a helpful response for greetings or test inputs."""
+    if language == "id":
+        return (
+            "Pertanyaan belum cukup spesifik. Tanyakan pemain, klub, liga, statistik, "
+            "perbandingan, top performers, atau valuasi pemain."
+        )
+    return (
+        "The question is not specific enough. Ask about a player, club, league, "
+        "statistics, comparisons, top performers, or player valuation."
+    )
+
+
+def is_low_information_question(question: str) -> bool:
+    """Detect greetings/test prompts that should not trigger retrieval."""
+    cleaned = normalize_space(question).lower().strip("?!.,")
+    if not cleaned:
+        return True
+    if cleaned in LOW_INFORMATION_TERMS:
+        return True
+    words = cleaned.split()
+    return len(words) == 1 and len(cleaned) < 4
 
 
 @dataclass(frozen=True)
@@ -79,27 +115,8 @@ def normalize_space(text: str) -> str:
 
 def extract_player_name_for_valuation(question: str) -> str:
     """Extract player candidate name from a valuation query."""
-    cleaned = question
-    removable = [
-        "estimasi",
-        "prediksi",
-        "range",
-        "nilai pasar",
-        "valuasi",
-        "valuation",
-        "market value",
-        "berapa",
-        "estimate",
-        "predict",
-        "please",
-        "tolong",
-        "untuk",
-        "for",
-        "?",
-    ]
-    for token in removable:
-        cleaned = re.sub(re.escape(token), " ", cleaned, flags=re.IGNORECASE)
-    return normalize_space(cleaned)
+    inferred = infer_player_name(question)
+    return inferred or normalize_space(question)
 
 
 def preview_text(text: str, max_chars: int = 900) -> str:
@@ -200,6 +217,28 @@ class AgenticRouter:
         if not rows:
             return NO_DATA_MESSAGE
         first = rows[0]
+        if first.get("answer_type") == "player_stats":
+            row = first
+            value = row.get("market_value_eur")
+            if value is None:
+                value_label = "nilai tidak tersedia" if language == "id" else "value unavailable"
+            elif language == "id":
+                value_label = f"EUR {float(value) / 1_000_000:.1f} juta"
+            else:
+                value_label = f"EUR {float(value) / 1_000_000:.1f} million"
+            if language == "id":
+                return (
+                    f"{row.get('player')} pada musim {row.get('season')} bersama {row.get('club')} "
+                    f"di {row.get('league')}: {row.get('goals') or 0} gol, "
+                    f"{row.get('assists') or 0} assist, {int(row.get('minutes') or 0)} menit, "
+                    f"{row.get('matches') or 0} laga. Nilai pasar terbaru: {value_label}."
+                )
+            return (
+                f"{row.get('player')} in {row.get('season')} with {row.get('club')} "
+                f"in {row.get('league')}: {row.get('goals') or 0} goals, "
+                f"{row.get('assists') or 0} assists, {int(row.get('minutes') or 0)} minutes, "
+                f"{row.get('matches') or 0} matches. Latest market value: {value_label}."
+            )
         if "similarity_score" in first:
             reference = first.get("reference_player")
             reference_value = first.get("reference_market_value_eur")
@@ -316,6 +355,24 @@ class AgenticRouter:
         use_llm_valuation: bool = False,
     ) -> AgenticResponse:
         """Run end-to-end routing, retrieval, and synthesis."""
+        cleaned_question = normalize_space(question).lower().strip("?!.,")
+        initial_language = "id" if cleaned_question in INDONESIAN_LOW_INFORMATION_TERMS else detect_language(question)
+        if is_low_information_question(question):
+            message = low_information_message(initial_language)
+            return AgenticResponse(
+                question=question,
+                answer=message,
+                strategy_used="vector_only",
+                language=initial_language,
+                data_available=False,
+                citations=[],
+                kg_rows=[],
+                vector_documents=[],
+                valuation=None,
+                fallback_signal=message,
+                debug={"guard": "low_information_question"},
+            )
+
         plan = self.plan_query(question, use_llm_planner=use_llm_planner)
         if is_ucl_question(question):
             return AgenticResponse(

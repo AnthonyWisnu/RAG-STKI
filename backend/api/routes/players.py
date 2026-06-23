@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 from typing import Any
 
 from cachetools import TTLCache
@@ -34,6 +35,7 @@ top_router = APIRouter(prefix="/api", tags=["top-performers"])
 
 SEARCH_CACHE: TTLCache = TTLCache(maxsize=256, ttl=300)
 TOP_CACHE: TTLCache = TTLCache(maxsize=128, ttl=300)
+LOGGER = logging.getLogger(__name__)
 
 
 def run_query(query: str, parameters: dict[str, Any] | None = None) -> list[dict[str, Any]]:
@@ -217,7 +219,11 @@ def top_performers(
     ORDER BY value DESC, minutes ASC
     LIMIT $limit
     """
-    rows = run_query(query, {"season": season, "league": league, "position": position, "limit": limit})
+    try:
+        rows = run_query(query, {"season": season, "league": league, "position": position, "limit": limit})
+    except Exception as exc:
+        LOGGER.warning("Top performers query gagal: %s", exc)
+        rows = []
     payload = {
         "category": category,
         "season": season,

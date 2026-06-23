@@ -28,13 +28,22 @@ class RefreshRequest(BaseModel):
 def read_status() -> dict[str, Any]:
     """Read current refresh status."""
     state = RefreshStateTracker().read()
+    error = state.get("manual_refresh_error")
+    has_usable_data = bool(
+        state.get("last_stats_refresh")
+        and state.get("stats_records")
+        and state.get("valuation_records")
+        and state.get("mapped_players")
+    )
+    if has_usable_data and error and "File mapping Transfermarkt lokal" in str(error):
+        error = None
     return {
         "status": state.get("manual_refresh_status", "idle"),
         "mode": state.get("manual_refresh_mode"),
         "started_at": state.get("manual_refresh_started_at"),
         "completed_at": state.get("manual_refresh_completed_at"),
         "failed_at": state.get("manual_refresh_failed_at"),
-        "error": state.get("manual_refresh_error"),
+        "error": error,
         "skipped_reason": state.get("manual_refresh_skipped_reason"),
         "last_refresh": state.get("last_refresh"),
         "last_stats_refresh": state.get("last_stats_refresh"),

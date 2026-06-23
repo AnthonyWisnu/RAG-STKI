@@ -130,6 +130,52 @@ def normalize_player_lookup_name(name: str) -> str:
     return cleaned
 
 
+def infer_player_name(question: str) -> str:
+    """Extract a player name from direct stat or valuation questions."""
+    cleaned = re.sub(r"20\d{2}[-/ ]?20\d{2}", " ", question, flags=re.IGNORECASE)
+    cleaned = re.sub(r"\b20\d{2}\b", " ", cleaned, flags=re.IGNORECASE)
+    removable = [
+        "jumlah gol",
+        "berapa gol",
+        "total gol",
+        "jumlah assist",
+        "berapa assist",
+        "total assist",
+        "nilai pasar",
+        "market value",
+        "valuasi",
+        "valuation",
+        "jumlah",
+        "berapa",
+        "berapa banyak",
+        "total",
+        "gol",
+        "goals",
+        "goal",
+        "assist",
+        "assists",
+        "menit",
+        "minutes",
+        "statistik",
+        "stats",
+        "musim",
+        "season",
+        "terbaru",
+        "latest",
+        "pada",
+        "di",
+        "untuk",
+        "for",
+        "what is",
+        "how many",
+    ]
+    for token in removable:
+        cleaned = re.sub(r"\b" + re.escape(token) + r"\b", " ", cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r"[^a-zA-ZÀ-ÿ' .-]", " ", cleaned)
+    cleaned = re.sub(r"\s+", " ", cleaned).strip(" ?.,")
+    return normalize_player_lookup_name(cleaned)
+
+
 def infer_compare_players(question: str) -> tuple[str, str] | None:
     """Extract two player names from comparison questions."""
     pattern = (
@@ -199,8 +245,7 @@ def build_template_plan(question: str) -> CypherPlan | None:
                    s.minutes AS minutes,
                    s.goals AS goals,
                    s.assists AS assists,
-                   s.shots_total AS shots_total,
-                   s.xg AS xg
+                   s.shots_total AS shots_total
             ORDER BY player ASC
             LIMIT 6
             """,
@@ -273,6 +318,44 @@ def build_template_plan(question: str) -> CypherPlan | None:
             fallback_reason="template_similar_cheaper_players",
         )
 
+    player_name = infer_player_name(question)
+    has_player_name = bool(player_name and len(player_name.split()) >= 2)
+    if has_player_name and any(
+        token in lowered
+        for token in ("jumlah gol", "berapa gol", "total gol", "gol", "goals", "assist", "minutes", "menit", "statistik", "stats")
+    ):
+        return CypherPlan(
+            query="""
+            MATCH (p:Player)
+            WHERE toLower(p.name) CONTAINS toLower($player_name)
+            MATCH (p)-[:HAS_STATS_IN]->(s:PlayerSeasonStats)-[:DURING]->(se:Season {id: $season})
+            MATCH (s)-[:WITH_CLUB]->(c:Club)
+            MATCH (s)-[:IN_LEAGUE]->(l:League)
+            OPTIONAL MATCH (p)-[:PLAYS_POSITION]->(pos:Position)
+            OPTIONAL MATCH (p)-[:HAS_VALUATION]->(v:Valuation)
+            WITH p, s, se, c, l, pos, v
+            ORDER BY v.valuation_date DESC
+            WITH p, s, se, c, l, pos, collect(v)[0] AS latest_value
+            RETURN "player_stats" AS answer_type,
+                   p.name AS player,
+                   c.name AS club,
+                   l.name AS league,
+                   se.id AS season,
+                   pos.name AS position,
+                   latest_value.market_value_eur AS market_value_eur,
+                   s.matches_played AS matches,
+                   s.minutes AS minutes,
+                   s.goals AS goals,
+                   s.assists AS assists,
+                   s.shots_total AS shots_total
+            ORDER BY minutes DESC
+            LIMIT 3
+            """,
+            parameters={"player_name": player_name, "season": season},
+            intent="player season stats",
+            fallback_reason="template_player_season_stats",
+        )
+
     if any(token in lowered for token in ("top skor", "top scorer", "pencetak gol", "goals")):
         where_league = (
             "MATCH (s)-[:IN_LEAGUE]->(l:League {name: $league_name})"
@@ -299,26 +382,7 @@ def build_template_plan(question: str) -> CypherPlan | None:
         )
 
     if any(token in lowered for token in ("valuation", "valuasi", "nilai pasar", "market value", "value")):
-        name = question
-        for token in (
-            "valuation",
-            "valuasi",
-            "nilai pasar",
-            "market value",
-            "value",
-            "berapa",
-            "what is",
-            "jelaskan",
-            "describe",
-            "profil",
-            "profile",
-            "dan",
-            "and",
-        ):
-            pattern = r"\b" + re.escape(token) + r"\b"
-            name = re.sub(pattern, " ", name, flags=re.IGNORECASE)
-        name = re.sub(r"\b[A-Za-z]\b", " ", name)
-        name = re.sub(r"\s+", " ", name).strip(" ?")
+        name = player_name or infer_player_name(question)
         return CypherPlan(
             query="""
             MATCH (p:Player)
@@ -421,11 +485,25 @@ class KGRetriever:
                 error = str(exc)
                 LOGGER.warning("KG retrieval attempt=%s failed: %s", attempt + 1, error)
                 if attempt == max_retries and fallback_plan is not None and fallback_plan.query:
-                    loader = Neo4jGraphLoader()
                     try:
-                        rows = loader.run_read_query(fallback_plan.query, fallback_plan.parameters)
-                    finally:
-                        loader.close()
+                        loader = Neo4jGraphLoader()
+                        try:
+                            rows = loader.run_read_query(fallback_plan.query, fallback_plan.parameters)
+                        finally:
+                            loader.close()
+                    except Exception as fallback_exc:
+                        fallback_error = str(fallback_exc)
+                        LOGGER.warning("KG fallback retrieval failed: %s", fallback_error)
+                        return KGRetrievalResult(
+                            strategy="kg_only",
+                            language=language,
+                            query=fallback_plan.query,
+                            parameters=fallback_plan.parameters,
+                            rows=[],
+                            citations=[],
+                            fallback_signal="Knowledge Graph sedang tidak terhubung.",
+                            error=fallback_error,
+                        )
                     citations = [kg_citation_from_row(row, index).to_dict() for index, row in enumerate(rows[:8])]
                     return KGRetrievalResult(
                         strategy="kg_only",
