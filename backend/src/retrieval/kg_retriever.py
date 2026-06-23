@@ -133,6 +133,7 @@ def infer_club(question: str) -> str | None:
 def infer_similarity_player(question: str) -> str:
     """Extract reference player name for similarity queries."""
     patterns = [
+        r"(?:pemain\s+)?(?:yang\s+)?(?:statistik|stats)\s+(?:paling\s+)?(?:mirip|serupa|similar)\s+([a-zA-ZÀ-ÿ' .-]+?)(?:\s+(?:atau|bahkan|akan|tetapi|tapi|namun|dengan|yang|lebih|but|with|market|nilai)|\?|$)",
         r"(?:alternatif|alternative|pengganti|mirip dengan|mirip seperti|seperti)\s+([a-zA-ZÀ-ÿ' .-]+?)(?:\s+(?:yang|dengan|tapi|tetapi|namun|lebih|but|with|market|nilai)|\?|$)",
         r"([a-zA-ZÀ-ÿ' .-]+?)\s+(?:yang\s+)?(?:statistiknya|statsnya|statistik|stats)\s+(?:mirip|serupa|similar)",
         r"(?:paling\s+)?(?:mirip|serupa|similar to|like)\s+([a-zA-ZÀ-ÿ' .-]+?)(?:\s+(?:atau|bahkan|akan|tetapi|tapi|namun|dengan|yang|lebih|but|with|market|nilai)|\?|$)",
@@ -156,7 +157,7 @@ def normalize_player_lookup_name(name: str) -> str:
         return "Erling Haaland"
     if "mbappe" in lowered or "mbapp" in lowered:
         return "Kylian Mbapp"
-    if "yamal" in lowered and ("lamin" in lowered or "lamine" in lowered):
+    if "yamal" in lowered:
         return "Lamine Yamal"
     return cleaned
 
@@ -174,6 +175,11 @@ def infer_player_name(question: str) -> str:
         "total assist",
         "nilai pasar",
         "market value",
+        "estimasi",
+        "prediksi",
+        "estimate",
+        "predict",
+        "perkiraan",
         "valuasi",
         "valuation",
         "jumlah",
