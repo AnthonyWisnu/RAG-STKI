@@ -150,8 +150,28 @@ def choose_strategy(question: str) -> QueryPlan:
         token in lowered for token in ("lebih murah", "lebih rendah", "lower", "cheaper", "market value", "nilai pasar")
     ):
         return QueryPlan("kg_only", language, "similar cheaper player search requested")
-    if any(token in lowered for token in ("top", "ranking", "rank", "skor", "scorer", "pencetak")):
+    if any(
+        token in lowered
+        for token in (
+            "top",
+            "ranking",
+            "rank",
+            "skor",
+            "scorer",
+            "pencetak",
+            "terbanyak",
+            "paling banyak",
+            "tertinggi",
+            "produktif",
+            "clean sheet",
+            "kontribusi",
+        )
+    ):
         return QueryPlan("kg_only", language, "structured data requested")
+    if "kiper" in lowered and any(token in lowered for token in ("bagus", "terbaik", "clean")):
+        return QueryPlan("kg_only", language, "goalkeeper ranking requested")
+    if any(token in lowered for token in ("mirip", "serupa", "similar")):
+        return QueryPlan("kg_only", language, "similar player search requested")
     if any(token in lowered for token in ("profil", "profile", "siapa", "who is", "ringkasan", "summary", "jelaskan", "describe")):
         if any(token in lowered for token in ("gol", "goals", "assist", "nilai", "valuasi", "valuation", "value", "stat", "stats")):
             return QueryPlan("hybrid", language, "profile plus structured data requested")
@@ -239,6 +259,32 @@ class AgenticRouter:
                 f"{row.get('assists') or 0} assists, {int(row.get('minutes') or 0)} minutes, "
                 f"{row.get('matches') or 0} matches. Latest market value: {value_label}."
             )
+        if first.get("answer_type") == "top_stats":
+            metric = str(first.get("metric") or "")
+            metric_label = first.get("metric_label") or "statistik"
+            lines = []
+            for index, row in enumerate(rows[:5], start=1):
+                value = int(float(row.get("value") or 0))
+                if language == "id":
+                    extra_parts = []
+                    if metric != "goals":
+                        extra_parts.append(f"{row.get('goals') or 0} gol")
+                    if metric != "assists":
+                        extra_parts.append(f"{row.get('assists') or 0} assist")
+                    extra_parts.append(f"{int(row.get('minutes') or 0)} menit")
+                    detail = f"{index}. {row.get('player')} ({row.get('club')}, {row.get('league')}) - {value} {metric_label}, " + ", ".join(extra_parts)
+                else:
+                    extra_parts = []
+                    if metric != "goals":
+                        extra_parts.append(f"{row.get('goals') or 0} goals")
+                    if metric != "assists":
+                        extra_parts.append(f"{row.get('assists') or 0} assists")
+                    extra_parts.append(f"{int(row.get('minutes') or 0)} minutes")
+                    detail = f"{index}. {row.get('player')} ({row.get('club')}, {row.get('league')}) - {value} {metric_label}, " + ", ".join(extra_parts)
+                lines.append(detail)
+            if language == "id":
+                return f"Top {metric_label} dari Knowledge Graph:\n" + "\n".join(lines)
+            return f"Top {metric_label} from the Knowledge Graph:\n" + "\n".join(lines)
         if "similarity_score" in first:
             reference = first.get("reference_player")
             reference_value = first.get("reference_market_value_eur")
@@ -261,12 +307,16 @@ class AgenticRouter:
                         f"similarity score {row.get('similarity_score')}."
                     )
             if language == "id":
-                reference_label = f"EUR {float(reference_value) / 1_000_000:.1f} juta" if reference_value is not None else "tidak tersedia"
+                if reference_value is None:
+                    return f"Pemain dengan statistik paling mirip {reference}:\n" + "\n".join(lines)
+                reference_label = f"EUR {float(reference_value) / 1_000_000:.1f} juta"
                 return (
                     f"Pemain dengan statistik paling mirip {reference} tetapi market value lebih rendah "
                     f"dari {reference_label}:\n" + "\n".join(lines)
                 )
-            reference_label = f"EUR {float(reference_value) / 1_000_000:.1f} million" if reference_value is not None else "unavailable"
+            if reference_value is None:
+                return f"Players statistically similar to {reference}:\n" + "\n".join(lines)
+            reference_label = f"EUR {float(reference_value) / 1_000_000:.1f} million"
             return (
                 f"Players statistically similar to {reference} with lower market value than {reference_label}:\n"
                 + "\n".join(lines)

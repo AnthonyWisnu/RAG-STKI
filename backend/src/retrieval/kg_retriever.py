@@ -48,6 +48,28 @@ LEAGUE_ALIASES = {
     "ligue 1": "Ligue 1",
 }
 
+CLUB_ALIASES = {
+    "barcelona": "Barcelona",
+    "barca": "Barcelona",
+    "arsenal": "Arsenal",
+    "manchester city": "Manchester City",
+    "man city": "Manchester City",
+    "manchester united": "Manchester United",
+    "man united": "Manchester United",
+    "liverpool": "Liverpool",
+    "chelsea": "Chelsea",
+    "real madrid": "Real Madrid",
+    "psg": "Paris Saint-Germain",
+    "paris saint-germain": "Paris Saint-Germain",
+    "bayern": "Bayern",
+    "bayern munich": "Bayern",
+    "bayern munchen": "Bayern",
+    "juventus": "Juventus",
+    "inter milan": "Internazionale",
+    "inter": "Internazionale",
+    "ac milan": "Milan",
+}
+
 
 @dataclass(frozen=True)
 class CypherPlan:
@@ -99,9 +121,21 @@ def infer_league(question: str) -> str | None:
     return None
 
 
+def infer_club(question: str) -> str | None:
+    """Extract a common club name from a natural question."""
+    lowered = question.lower()
+    for alias, club in CLUB_ALIASES.items():
+        if alias in lowered:
+            return club
+    return None
+
+
 def infer_similarity_player(question: str) -> str:
     """Extract reference player name for similarity queries."""
     patterns = [
+        r"(?:alternatif|alternative|pengganti|mirip dengan|mirip seperti|seperti)\s+([a-zA-ZÀ-ÿ' .-]+?)(?:\s+(?:yang|dengan|tapi|tetapi|namun|lebih|but|with|market|nilai)|\?|$)",
+        r"([a-zA-ZÀ-ÿ' .-]+?)\s+(?:yang\s+)?(?:statistiknya|statsnya|statistik|stats)\s+(?:mirip|serupa|similar)",
+        r"(?:paling\s+)?(?:mirip|serupa|similar to|like)\s+([a-zA-ZÀ-ÿ' .-]+?)(?:\s+(?:atau|bahkan|akan|tetapi|tapi|namun|dengan|yang|lebih|but|with|market|nilai)|\?|$)",
         r"(?:mirip|serupa|similar to|like)\s+([a-zA-ZÀ-ÿ' .-]+?)(?:\s+(?:atau|bahkan|akan|tetapi|tapi|namun|dengan|yang|lebih|but|with|market|nilai)|\?|$)",
         r"(?:statistik|stats)\s+([a-zA-ZÀ-ÿ' .-]+?)(?:\s+(?:atau|bahkan|akan|tetapi|tapi|namun|dengan|yang|lebih|but|with|market|nilai)|\?|$)",
     ]
@@ -110,10 +144,7 @@ def infer_similarity_player(question: str) -> str:
         if match:
             name = re.sub(r"\s+", " ", match.group(1)).strip(" ?.,")
             if name:
-                lowered = name.lower()
-                if "yamal" in lowered and ("lamin" in lowered or "lamine" in lowered):
-                    return "Lamine Yamal"
-                return name
+                return normalize_player_lookup_name(name)
     return question.strip(" ?")
 
 
@@ -168,6 +199,15 @@ def infer_player_name(question: str) -> str:
         "for",
         "what is",
         "how many",
+        "ini",
+        "sudah",
+        "cetak",
+        "mencetak",
+        "bikin",
+        "membuat",
+        "sekarang",
+        "menurut data",
+        "yang ada",
     ]
     for token in removable:
         cleaned = re.sub(r"\b" + re.escape(token) + r"\b", " ", cleaned, flags=re.IGNORECASE)
@@ -202,6 +242,70 @@ def validate_readonly_cypher(query: str) -> None:
         raise ValueError("Cypher write clause tidak diizinkan")
     if not stripped.upper().startswith(("MATCH", "WITH")):
         raise ValueError("Cypher harus dimulai dengan MATCH atau WITH")
+
+
+def build_top_stats_plan(
+    *,
+    season: str,
+    limit: int,
+    league: str | None = None,
+    club: str | None = None,
+    position: str | None = None,
+    metric: str = "goals",
+) -> CypherPlan:
+    """Build a deterministic top-stat query for natural ranking questions."""
+    metric_expression = {
+        "goals": "coalesce(s.goals, 0)",
+        "assists": "coalesce(s.assists, 0)",
+        "clean_sheets": "coalesce(s.clean_sheets, 0)",
+        "contribution": "coalesce(s.goals, 0) + coalesce(s.assists, 0)",
+    }.get(metric, "coalesce(s.goals, 0)")
+    metric_label = {
+        "goals": "gol",
+        "assists": "assist",
+        "clean_sheets": "clean sheet",
+        "contribution": "kontribusi gol+assist",
+    }.get(metric, "gol")
+    return CypherPlan(
+        query=f"""
+        MATCH (p:Player)-[:HAS_STATS_IN]->(s:PlayerSeasonStats)-[:DURING]->(se:Season {{id: $season}})
+        MATCH (s)-[:WITH_CLUB]->(c:Club)
+        MATCH (s)-[:IN_LEAGUE]->(l:League)
+        OPTIONAL MATCH (p)-[:PLAYS_POSITION]->(pos:Position)
+        WITH p, s, se, c, l, pos, {metric_expression} AS value
+        WHERE ($league_name IS NULL OR l.name = $league_name)
+          AND ($club_name IS NULL OR toLower(c.name) CONTAINS toLower($club_name))
+          AND ($position IS NULL OR pos.name = $position)
+          AND value > 0
+        RETURN "top_stats" AS answer_type,
+               $metric AS metric,
+               $metric_label AS metric_label,
+               p.name AS player,
+               c.name AS club,
+               l.name AS league,
+               se.id AS season,
+               pos.name AS position,
+               value AS value,
+               s.goals AS goals,
+               s.assists AS assists,
+               s.clean_sheets AS clean_sheets,
+               s.minutes AS minutes,
+               s.matches_played AS matches
+        ORDER BY value DESC, minutes ASC
+        LIMIT $limit
+        """,
+        parameters={
+            "season": season,
+            "limit": limit,
+            "league_name": league,
+            "club_name": club,
+            "position": position,
+            "metric": metric,
+            "metric_label": metric_label,
+        },
+        intent=f"top {metric}",
+        fallback_reason=f"template_top_{metric}",
+    )
 
 
 def build_template_plan(question: str) -> CypherPlan | None:
@@ -252,6 +356,45 @@ def build_template_plan(question: str) -> CypherPlan | None:
             parameters={"player_a": player_a, "player_b": player_b, "season": season},
             intent="player comparison",
             fallback_reason="template_player_comparison",
+        )
+
+    club = infer_club(question)
+    if club and any(token in lowered for token in ("kontribusi", "gol dan assist", "goal and assist", "goals and assists")):
+        return build_top_stats_plan(season=season, league=league, club=club, limit=limit, metric="contribution")
+
+    if any(token in lowered for token in ("clean sheet", "clean sheets")) or (
+        "kiper" in lowered and any(token in lowered for token in ("paling bagus", "terbaik", "bagus"))
+    ):
+        return build_top_stats_plan(
+            season=season,
+            league=league,
+            limit=limit,
+            position="Goalkeeper",
+            metric="clean_sheets",
+        )
+
+    if any(token in lowered for token in ("assist terbanyak", "top assist", "pemberi assist", "assist paling banyak")):
+        return build_top_stats_plan(season=season, league=league, limit=limit, metric="assists")
+
+    if any(
+        token in lowered
+        for token in (
+            "top skor",
+            "top scorer",
+            "pencetak gol",
+            "gol paling banyak",
+            "gol terbanyak",
+            "striker paling produktif",
+            "paling produktif",
+        )
+    ):
+        position = "Forward" if any(token in lowered for token in ("striker", "forward", "penyerang")) else None
+        return build_top_stats_plan(
+            season=season,
+            league=league,
+            limit=limit,
+            position=position,
+            metric="goals",
         )
 
     if any(token in lowered for token in ("mirip", "serupa", "similar")) and any(
@@ -316,6 +459,55 @@ def build_template_plan(question: str) -> CypherPlan | None:
             parameters={"player_name": player_name, "season": season, "limit": limit},
             intent="similar cheaper players",
             fallback_reason="template_similar_cheaper_players",
+        )
+
+    if any(token in lowered for token in ("mirip", "serupa", "similar")):
+        player_name = infer_similarity_player(question)
+        return CypherPlan(
+            query="""
+            MATCH (target:Player)
+            WHERE toLower(target.name) CONTAINS toLower($player_name)
+            MATCH (target)-[:HAS_STATS_IN]->(target_stats:PlayerSeasonStats)-[:DURING]->(season:Season {id: $season})
+            OPTIONAL MATCH (target)-[:PLAYS_POSITION]->(target_pos:Position)
+            WITH target, target_stats, season, target_pos
+            MATCH (candidate:Player)-[:HAS_STATS_IN]->(candidate_stats:PlayerSeasonStats)-[:DURING]->(season)
+            WHERE candidate.api_id <> target.api_id
+              AND coalesce(candidate_stats.minutes, 0) >= 400
+            OPTIONAL MATCH (candidate)-[:PLAYS_POSITION]->(candidate_pos:Position)
+            WITH target, target_stats, season, target_pos, candidate, candidate_stats, candidate_pos
+            WHERE candidate_pos.name = target_pos.name
+            MATCH (candidate_stats)-[:WITH_CLUB]->(candidate_club:Club)
+            MATCH (candidate_stats)-[:IN_LEAGUE]->(candidate_league:League)
+            OPTIONAL MATCH (candidate)-[:HAS_VALUATION]->(candidate_value:Valuation)
+            WITH target, target_stats, season, target_pos,
+                 candidate, candidate_stats, candidate_pos, candidate_club, candidate_league, candidate_value,
+                 (
+                   abs(coalesce(candidate_stats.minutes, 0) - coalesce(target_stats.minutes, 0)) / 3000.0 +
+                   abs(coalesce(candidate_stats.goals, 0) - coalesce(target_stats.goals, 0)) / 20.0 +
+                   abs(coalesce(candidate_stats.assists, 0) - coalesce(target_stats.assists, 0)) / 20.0 +
+                   abs(coalesce(candidate_stats.shots_total, 0) - coalesce(target_stats.shots_total, 0)) / 80.0
+                 ) AS similarity_score
+            ORDER BY candidate_value.valuation_date DESC
+            WITH target, candidate, candidate_stats, candidate_pos, candidate_club, candidate_league,
+                 collect(candidate_value)[0] AS latest_value, similarity_score, season
+            RETURN target.name AS reference_player,
+                   candidate.name AS player,
+                   candidate_club.name AS club,
+                   candidate_league.name AS league,
+                   season.id AS season,
+                   candidate_pos.name AS position,
+                   latest_value.market_value_eur AS market_value_eur,
+                   candidate_stats.minutes AS minutes,
+                   candidate_stats.goals AS goals,
+                   candidate_stats.assists AS assists,
+                   candidate_stats.shots_total AS shots_total,
+                   round(similarity_score * 1000) / 1000.0 AS similarity_score
+            ORDER BY similarity_score ASC, market_value_eur ASC
+            LIMIT $limit
+            """,
+            parameters={"player_name": player_name, "season": season, "limit": limit},
+            intent="similar players",
+            fallback_reason="template_similar_players",
         )
 
     player_name = infer_player_name(question)
